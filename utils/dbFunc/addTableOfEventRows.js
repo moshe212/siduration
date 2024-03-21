@@ -6,7 +6,6 @@ const addTableOfEventRows = async ({ UserID, TableID, EventID }) => {
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const tableOfEventRow = {
-    UserID,
     TableID,
     EventID,
   };

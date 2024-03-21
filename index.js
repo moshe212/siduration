@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const http = require("http");
+
+dotenv.config();
 const server = http.createServer(app);
 
 const { dbFunc } = require("./utils/dbFunc/index");
@@ -73,6 +75,12 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
 app.get("/", (req, res) => {
   res.redirect("/he");
 });
+
+dbFunc
+  .addTableOfEventRows({ UserID: 11, TableID: 2, EventID: 3 })
+  .then((res) => {
+    console.log(`addTableOfEventRows: ${res}`);
+  });
 
 // Start the server
 server.listen(port, () => {
