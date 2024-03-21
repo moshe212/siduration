@@ -5,8 +5,6 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const port = 3000;
 
-const puppeteer = require("puppeteer");
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
