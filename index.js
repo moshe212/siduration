@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const http = require("http");
 const server = http.createServer(app);
 
-const { dbFunc } = require("./utils/dbFunc");
+const { dbFunc } = require("./utils/index");
 
 let port = process.env.PORT;
 if (port == null || port == "") {
