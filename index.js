@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
+const server = http.createServer(app);
 
 let port = process.env.PORT;
 if (port == null || port == "") {
@@ -58,6 +59,6 @@ app.get("/", (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
