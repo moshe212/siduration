@@ -57,10 +57,10 @@ const sendMail = (an, mail) => {
 app.post("/api/createTableOfEventRows", async (_req, res) => {
   console.log("Adalo");
   console.log("req", _req.body);
-  const { UserID, TableID, EventID } = _req.body;
+  const { UserID, EventID, TableCount } = _req.body;
 
   dbFunc
-    .addTableOfEventRows({ UserID, TableID, EventID })
+    .addTableOfEventRows({ UserID, EventID, TableCount })
     .then((data) => {
       // Assuming `data` is what the promise resolves with
       console.log(`addTableOfEventRows: ${data}`);

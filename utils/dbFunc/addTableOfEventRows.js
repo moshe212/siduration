@@ -1,25 +1,26 @@
 const { createClient } = require("@supabase/supabase-js");
 
-const addTableOfEventRows = async ({ UserID, TableID, EventID }) => {
+const addTableOfEventRows = async ({ UserID, EventID, TableCount }) => {
   const supabaseUrl = "https://eavydmhhilwqdcspqhlj.supabase.co";
   const supabaseKey = process.env.SUPABASE_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const tableOfEventRow = {
-    TableID,
-    EventID,
-  };
+  // Create an array of objects to insert
+  const rowsToInsert = Array.from({ length: TableCount }, () => ({
+    EventID, // Assuming you want to use the same EventID for all rows
+    // Add any other properties here if needed
+  }));
 
   const { data, error } = await supabase
     .from("TableOfEvent")
-    .insert(tableOfEventRow);
+    .insert(rowsToInsert);
 
   if (error) {
-    console.log(error);
-    return error;
+    console.error(error); // Changed to console.error for better error visibility
+    return { error };
   } else {
     console.log(data);
-    return data;
+    return { data };
   }
 };
 
