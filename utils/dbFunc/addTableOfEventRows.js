@@ -1,4 +1,5 @@
 const { createClient } = require("@supabase/supabase-js");
+dotenv.config();
 
 const addTableOfEventRows = async ({ UserID, TableID, EventID }) => {
   const supabaseUrl = "https://eavydmhhilwqdcspqhlj.supabase.co";
