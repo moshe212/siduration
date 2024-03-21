@@ -58,7 +58,7 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
   console.log("Adalo");
   console.log("req", _req.body);
   const { TableID, EventID } = _req.body;
-  dbFunc.addTableOfEventRows({ UserID, TableID, EventID }).then((res) => {
+  dbFunc.addTableOfEventRows({ TableID, EventID }).then((res) => {
     console.log(`addTableOfEventRows: ${res}`);
     if (error) {
       console.log(error);
