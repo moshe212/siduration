@@ -58,18 +58,22 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
   console.log("Adalo");
   console.log("req", _req.body);
   const { UserID, TableID, EventID } = _req.body;
-  dbFunc.addTableOfEventRows({ UserID, TableID, EventID }).then((res) => {
-    console.log(`addTableOfEventRows: ${res}`);
-    if (error) {
-      console.log(error);
+
+  dbFunc
+    .addTableOfEventRows({ UserID, TableID, EventID })
+    .then((data) => {
+      // Assuming `data` is what the promise resolves with
+      console.log(`addTableOfEventRows: ${data}`);
+      // Successfully added row, send back a success response
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      // Properly catch and handle any errors
+      console.error(error); // Log the error for debugging
       res
         .status(500)
         .send("error on add row to TableOfEventRows table: " + error);
-    } else {
-      console.log(data);
-      res.status(200).send("ok");
-    }
-  });
+    });
 });
 
 app.get("/", (req, res) => {
