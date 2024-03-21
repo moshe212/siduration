@@ -1,4 +1,4 @@
-const { addtableOfEventRows } = require("./addtableOfEventRows");
+const { addTableOfEventRows } = require("./addTableOfEventRows");
 
 const dbFunc = { addtableOfEventRows };
 
