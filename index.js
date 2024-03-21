@@ -76,12 +76,6 @@ app.get("/", (req, res) => {
   res.redirect("/he");
 });
 
-dbFunc
-  .addTableOfEventRows({ UserID: 11, TableID: 2, EventID: 3 })
-  .then((res) => {
-    console.log(`addTableOfEventRows: ${res}`);
-  });
-
 // Start the server
 server.listen(port, () => {
   console.log(`Server runningg on port ${port}`);
