@@ -7,6 +7,8 @@ const dotenv = require("dotenv");
 const http = require("http");
 const server = http.createServer(app);
 
+const { dbFunc } = require("./utils/dbFunc");
+
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 5000;
@@ -53,7 +55,19 @@ const sendMail = (an, mail) => {
 app.post("/api/createTableOfEventRows", async (_req, res) => {
   console.log("Adalo");
   console.log("req", _req.body);
-  res.status(200).end();
+  const { UserID, TableID, EventID } = _req.body;
+  dbFunc.addTableOfEventRows({ UserID, TableID, EventID }).then((res) => {
+    console.log(`addTableOfEventRows: ${res}`);
+    if (error) {
+      console.log(error);
+      res
+        .status(500)
+        .send("error on add row to TableOfEventRows table: " + error);
+    } else {
+      console.log(data);
+      res.status(200).send("ok");
+    }
+  });
 });
 
 app.get("/", (req, res) => {
