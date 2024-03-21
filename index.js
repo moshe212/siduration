@@ -3,7 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-const port = 3000;
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 5000;
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
