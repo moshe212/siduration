@@ -1,5 +1,5 @@
 const { addTableOfEventRows } = require("./addTableOfEventRows");
 
-const dbFunc = { addtableOfEventRows };
+const dbFunc = { addTableOfEventRows };
 
 module.exports = { dbFunc };
