@@ -16,9 +16,10 @@ const addTableOfEventRows_Airtable = async ({
   const table = base("TableOfEvent");
 
   // Create an array of objects to insert
-  let rowsToInsert = Array.from({ length: TableCount }, () => ({
+  let rowsToInsert = Array.from({ length: TableCount }, (_, index) => ({
     fields: {
       EventID, // Make sure 'EventID' matches the field name in your Airtable table
+      TableID: index + 1,
       // Add any other fields here
     },
   }));
