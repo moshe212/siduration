@@ -60,7 +60,7 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
   const { UserID, EventID, TableCount } = _req.body;
 
   dbFunc
-    .addTableOfEventRows({ UserID, EventID, TableCount })
+    .addTableOfEventRows_Airtable({ UserID, EventID, TableCount })
     .then((data) => {
       // Assuming `data` is what the promise resolves with
       console.log(`addTableOfEventRows: ${data}`);

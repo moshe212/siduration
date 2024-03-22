@@ -11,6 +11,8 @@ const addTableOfEventRows = async ({ UserID, EventID, TableCount }) => {
     // Add any other properties here if needed
   }));
 
+  //If rows exist do not create
+
   const { data, error } = await supabase
     .from("TableOfEvent")
     .insert(rowsToInsert);
