@@ -109,11 +109,11 @@ app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
 app.post("/api/createInvitedsFromFile", async (_req, res) => {
   console.log("createInvitedsFromFile");
   console.log("req", _req.body);
-  const { userId, excelFileUrl } = _req.body;
+  const { userID, excelFileUrl } = _req.body;
 
   dbFunc
     .createInvitedFromFile({
-      userId,
+      userID,
       excelFileUrl,
     })
     .then((data) => {
