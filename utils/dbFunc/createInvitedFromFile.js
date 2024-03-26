@@ -1,6 +1,7 @@
 const Airtable = require("airtable");
 const xlsx = require("xlsx");
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
+const axios = require("axios");
 
 const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
@@ -49,7 +50,9 @@ const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
   };
 
   const processExcelFile = async (url, eventId, userID) => {
-    const response = await fetch(url);
+    const response = await axios.get(url, {
+      responseType: "arraybuffer",
+    });
     const arrayBuffer = await response.arrayBuffer();
     const workbook = xlsx.read(new Uint8Array(arrayBuffer), { type: "array" });
     const sheetName = workbook.SheetNames[0];
