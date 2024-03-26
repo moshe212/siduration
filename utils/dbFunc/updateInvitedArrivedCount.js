@@ -22,10 +22,10 @@ const updateInvitedArrivedCount = async ({
       })
       .firstPage();
 
-    if (recordsToFindInFirstTable.length === 0) {
-      console.log("No matching records found in recordsToFindInFirstTable");
-      return;
-    }
+    // if (recordsToFindInFirstTable.length === 0) {
+    //   console.log("No matching records found in recordsToFindInFirstTable");
+    //   return;
+    // }
 
     if (recordsToFindInFirstTable.length > 0) {
       const recordToUpdate = recordsToFindInFirstTable[0];
@@ -51,10 +51,10 @@ const updateInvitedArrivedCount = async ({
       })
       .firstPage();
 
-    if (recordsToFindInSecondTable.length === 0) {
-      console.log("No matching records found in recordsToFindInSecondTable");
-      return;
-    }
+    // if (recordsToFindInSecondTable.length === 0) {
+    //   console.log("No matching records found in recordsToFindInSecondTable");
+    //   return;
+    // }
 
     if (recordsToFindInSecondTable.length > 0) {
       const updates = recordsToFindInSecondTable.map((record) => ({
