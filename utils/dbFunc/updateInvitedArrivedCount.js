@@ -3,7 +3,7 @@ const Airtable = require("airtable");
 const updateInvitedArrivedCount = async ({
   TableID,
   EventID,
-  ActualArrived,
+  ActualArrivedCount,
 }) => {
   Airtable.configure({
     endpointUrl: "https://api.airtable.com",
@@ -27,11 +27,13 @@ const updateInvitedArrivedCount = async ({
 
     // Assuming TableID and EventID combination is unique, update the first found record
     const recordToUpdate = recordsToFind[0];
+    const currentCountInvited = recordToUpdate.fields.ActualArrived || 0; // Default to 0 if undefined
+    const newCountInvited = currentCountInvited + ActualArrivedCount; // Calculate the new CountInvited value
     const updateResult = await table.update([
       {
         id: recordToUpdate.id,
         fields: {
-          ActualArrived, // Update CountInvited field
+          ActualArrived: newCountInvited, // Update CountInvited field
         },
       },
     ]);
