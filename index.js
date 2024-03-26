@@ -80,7 +80,7 @@ app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
   console.log("updateInvitedArrivedCount");
   console.log("req", _req.body);
   const { TableID, EventID, CountArrived } = _req.body;
-
+  res.status(200).send("ok");
   // dbFunc
   //   .addTableOfEventRows_Airtable({TableID, EventID, CountArrived })
   //   .then((data) => {
