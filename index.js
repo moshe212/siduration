@@ -79,10 +79,15 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
 app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
   console.log("updateInvitedArrivedCount");
   console.log("req", _req.body);
-  const { TableID, EventID, ActualArrivedCount } = _req.body;
+  const { TableID, EventID, InvitedID, ActualArrivedCount } = _req.body;
   res.status(200).send("ok");
   dbFunc
-    .updateInvitedArrivedCount({ TableID, EventID, ActualArrivedCount })
+    .updateInvitedArrivedCount({
+      TableID,
+      EventID,
+      InvitedID,
+      ActualArrivedCount,
+    })
     .then((data) => {
       // Assuming `data` is what the promise resolves with
       console.log(`updateInvitedArrivedCount: ${data}`);
