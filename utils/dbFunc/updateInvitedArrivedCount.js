@@ -34,7 +34,7 @@ const updateInvitedArrivedCount = async ({
       const newCountArrived =
         parseInt(currentCountArrived) + parseInt(ActualArrivedCount);
       const isFull =
-        parseInt(newCountArrived) > parseInt(amountSeats) ? "true" : "false";
+        parseInt(newCountArrived) >= parseInt(amountSeats) ? "true" : "false";
       await firstTable.update([
         {
           id: recordToUpdate.id,
