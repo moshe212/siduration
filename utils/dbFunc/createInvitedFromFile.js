@@ -12,6 +12,7 @@ const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
 
   const getEventIdForUser = async (userID) => {
     console.log("getEventIdForUser");
+    console.log("userID: " + userID);
     const eventsTable = airtableBase("Events");
     const records = await eventsTable
       .select({
