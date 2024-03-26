@@ -76,6 +76,28 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
     });
 });
 
+app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
+  console.log("updateInvitedArrivedCount");
+  console.log("req", _req.body);
+  const { TableID, EventID, CountArrived } = _req.body;
+
+  // dbFunc
+  //   .addTableOfEventRows_Airtable({TableID, EventID, CountArrived })
+  //   .then((data) => {
+  //     // Assuming `data` is what the promise resolves with
+  //     console.log(`addTableOfEventRows: ${data}`);
+  //     // Successfully added row, send back a success response
+  //     res.status(200).send("ok");
+  //   })
+  //   .catch((error) => {
+  //     // Properly catch and handle any errors
+  //     console.error(error); // Log the error for debugging
+  //     res
+  //       .status(500)
+  //       .send("error on add row to TableOfEventRows table: " + error);
+  //   });
+});
+
 app.get("/", (req, res) => {
   res.redirect("/he");
 });
