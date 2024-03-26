@@ -57,7 +57,7 @@ const createInvitedFromFile = async ({ userId, excelFileUrl }) => {
     const response = await axios.get(url, {
       responseType: "arraybuffer",
     });
-    const arrayBuffer = await response.arrayBuffer();
+    const arrayBuffer = response.data;
     const workbook = xlsx.read(new Uint8Array(arrayBuffer), { type: "array" });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
