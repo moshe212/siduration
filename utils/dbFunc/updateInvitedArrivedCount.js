@@ -31,7 +31,8 @@ const updateInvitedArrivedCount = async ({
       const recordToUpdate = recordsToFindInFirstTable[0];
       const currentCountArrived = recordToUpdate.fields.ActualArrived || 0;
       const amountSeats = recordToUpdate.fields.AmountSeats || 0;
-      const newCountArrived = currentCountArrived + ActualArrivedCount;
+      const newCountArrived =
+        parseInt(currentCountArrived) + parseInt(ActualArrivedCount);
       const isFull =
         parseInt(newCountArrived) > parseInt(amountSeats) ? "true" : "false";
       await firstTable.update([
@@ -60,8 +61,8 @@ const updateInvitedArrivedCount = async ({
       const updates = recordsToFindInSecondTable.map((record) => ({
         id: record.id,
         fields: {
-          Is_Actually_Arrived: true,
-          Actually_Arrived_Count: record.fields.Actually_Arrived_Count || 0,
+          Is_Actualy_Arrived: "true",
+          Actualy_Arrived_Count: ActualArrivedCount,
         },
       }));
 
