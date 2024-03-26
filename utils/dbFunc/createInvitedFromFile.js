@@ -11,6 +11,7 @@ const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
   );
 
   const getEventIdForUser = async (userID) => {
+    console.log("getEventIdForUser");
     const eventsTable = airtableBase("Events");
     const records = await eventsTable
       .select({
@@ -23,6 +24,7 @@ const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
   };
 
   const addRowToInvitedTable = async (rowData, eventId, userID, index) => {
+    console.log("addRowToInvitedTable");
     const invitedTable = airtableBase("Invited");
     const airtableRowData = {
       InvitedID: index,
@@ -50,6 +52,7 @@ const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
   };
 
   const processExcelFile = async (url, eventId, userID) => {
+    console.log("processExcelFile");
     const response = await axios.get(url, {
       responseType: "arraybuffer",
     });
@@ -68,6 +71,7 @@ const createInvitedFromFile = async ({ userID, excelFileUrl }) => {
   };
 
   const addUserInvitesFromExcel = async (userID, excelFileUrl) => {
+    console.log("addUserInvitesFromExcel");
     try {
       const eventId = await getEventIdForUser(userID);
       if (!eventId) {
