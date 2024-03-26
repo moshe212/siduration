@@ -29,14 +29,16 @@ const updateInvitedArrivedCount = async ({
 
     if (recordsToFindInFirstTable.length > 0) {
       const recordToUpdate = recordsToFindInFirstTable[0];
-      const currentCountInvited = recordToUpdate.fields.ActualArrived || 0;
-      const newCountInvited = currentCountInvited + ActualArrivedCount;
-
+      const currentCountArrived = recordToUpdate.fields.ActualArrived || 0;
+      const amountSeats = recordToUpdate.fields.AmountSeats || 0;
+      const newCountArrived = currentCountArrived + ActualArrivedCount;
+      const isFull = parseInt(newCountArrived) > parseInt(amountSeats);
       await firstTable.update([
         {
           id: recordToUpdate.id,
           fields: {
-            ActualArrived: newCountInvited,
+            ActualArrived: newCountArrived,
+            IsFull: isFull,
           },
         },
       ]);
