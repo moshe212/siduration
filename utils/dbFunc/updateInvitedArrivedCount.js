@@ -61,7 +61,7 @@ const updateInvitedArrivedCount = async ({
       const updates = recordsToFindInSecondTable.map((record) => ({
         id: record.id,
         fields: {
-          Is_Actualy_Arrived: "true",
+          Is_Actually_Arrived: "true",
           Actualy_Arrived_Count: ActualArrivedCount,
         },
       }));
