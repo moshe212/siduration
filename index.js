@@ -5,11 +5,13 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const http = require("http");
+const schedule = require("node-schedule");
 
 dotenv.config();
 const server = http.createServer(app);
 
 const { dbFunc } = require("./utils/dbFunc/index");
+const { waMessageFunc } = require("./utils/function/index");
 
 let port = process.env.PORT;
 if (port == null || port == "") {
@@ -136,6 +138,12 @@ app.post("/api/createInvitedsFromFile", async (_req, res) => {
 app.get("/", (req, res) => {
   res.redirect("/he");
 });
+
+const job1 = schedule.scheduleJob("0 * * * *", waMessageFunc.sendThanksMessage);
+const job2 = schedule.scheduleJob("0 * * * *", waMessageFunc.sendInviteMessage);
+const job3 = schedule.scheduleJob("0 * * * *", waMessageFunc.sendRemindMessage);
+
+// waMessageFunc.sendRemindMessage();
 
 // Start the server
 server.listen(port, () => {
