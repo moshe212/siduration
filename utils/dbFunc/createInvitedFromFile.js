@@ -3,7 +3,11 @@ const xlsx = require("xlsx");
 // const fetch = require("node-fetch");
 const axios = require("axios");
 
-const createInvitedFromFile = async ({ userId, excelFileUrl }) => {
+const createInvitedFromFile = async ({
+  userId,
+  excelFileUrl,
+  eventIdFromAdalo,
+}) => {
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
   const airtableBase = new Airtable({ apiKey: airtableApiKey }).base(
@@ -41,6 +45,7 @@ const createInvitedFromFile = async ({ userId, excelFileUrl }) => {
       // 'Actually_Arrived_Count': parseInt(rowData['ActuallyArrivedCount'], 10), // Example conversion, adjust 'ActuallyArrivedCount' as needed
       Notes: rowData["Notes"], // Assuming direct match, adjust if needed
       MsgLang: 1,
+      DoSendMessage: rowData["DoSendMessage"],
       UserID: userId, // This comes from the parameter, no need to adjust
     };
 
@@ -74,7 +79,9 @@ const createInvitedFromFile = async ({ userId, excelFileUrl }) => {
   const addUserInvitesFromExcel = async (userId, excelFileUrl) => {
     console.log("addUserInvitesFromExcel");
     try {
-      const eventId = await getEventIdForUser(userId);
+      const eventId = eventIdFromAdalo
+        ? eventIdFromAdalo
+        : await getEventIdForUser(userId);
       if (!eventId) {
         console.error("EventID not found for the given UserID");
         return;

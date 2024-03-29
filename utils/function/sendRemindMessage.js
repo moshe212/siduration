@@ -75,25 +75,27 @@ const sendRemindMessage = async () => {
       const records = response.data.records;
 
       records.forEach(async (record, index) => {
-        const delay = Math.random() * (60000 - 30000) + 30000;
-        setTimeout(async () => {
-          const phoneNumber = record.fields.Phone;
-          const { date: cleanDate } = await extractDateAndHour({
-            isoDateString: eventDate,
-          });
-          let personalizedMessage = messageTemplate
-            .replace("{CapleName}", userFullName)
-            .replace("{EventDate}", cleanDate)
-            .replace(
-              "{InvitedName}",
-              `${record.fields.First_Name} ${record.fields.Last_Name}`
+        if (record.fields.DoSendMessage === "true") {
+          const delay = Math.random() * (60000 - 30000) + 30000;
+          setTimeout(async () => {
+            const phoneNumber = record.fields.Phone;
+            const { date: cleanDate } = await extractDateAndHour({
+              isoDateString: eventDate,
+            });
+            let personalizedMessage = messageTemplate
+              .replace("{CapleName}", userFullName)
+              .replace("{EventDate}", cleanDate)
+              .replace(
+                "{InvitedName}",
+                `${record.fields.First_Name} ${record.fields.Last_Name}`
+              );
+            const messageSentSuccessfully = await sendMessageWithGreenApi(
+              phoneNumber,
+              personalizedMessage
             );
-          const messageSentSuccessfully = await sendMessageWithGreenApi(
-            phoneNumber,
-            personalizedMessage
-          );
-          await updateRemindMsgStatus(record.id, messageSentSuccessfully);
-        }, delay * index);
+            await updateRemindMsgStatus(record.id, messageSentSuccessfully);
+          }, delay * index);
+        }
       });
     } catch (error) {
       console.error("Failed to fetch Invited records or send messages", error);

@@ -111,12 +111,13 @@ app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
 app.post("/api/createInvitedsFromFile", async (_req, res) => {
   console.log("createInvitedsFromFile");
   console.log("req", _req.body);
-  const { userId, excelFileUrl } = _req.body;
-  console.log(userId, excelFileUrl);
+  const { userId, excelFileUrl, eventId } = _req.body;
+  console.log(userId, excelFileUrl, eventId);
   dbFunc
     .createInvitedFromFile({
       userId,
       excelFileUrl,
+      eventIdFromAdalo: eventId,
     })
     .then((data) => {
       // Assuming `data` is what the promise resolves with
