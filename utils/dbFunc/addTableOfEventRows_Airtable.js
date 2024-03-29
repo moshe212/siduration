@@ -57,7 +57,7 @@ const addTableOfEventRows_Airtable = async ({
           {
             id: eventRecordId,
             fields: {
-              IsTableAdded: true,
+              IsTableAdded: "true",
             },
           },
         ]);
