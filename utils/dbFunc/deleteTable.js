@@ -36,7 +36,7 @@ const deleteTable = async ({ eventID, tableID }) => {
         {
           id: record.id,
           fields: {
-            TableID: "", // Setting TableID to empty
+            TableID: 0, // Setting TableID to empty
           },
         },
       ]);
