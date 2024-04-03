@@ -41,7 +41,7 @@ const deleteTable = async ({ eventID, tableID }) => {
         },
       ]);
     }
-    console.log("Record(s) updated successfully in Events table.");
+    console.log("Record(s) updated successfully in Invited table.");
 
     return { success: true };
   } catch (error) {
