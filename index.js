@@ -137,7 +137,7 @@ app.post("/api/createInvitedsFromFile", async (_req, res) => {
 });
 
 app.post("/api/updateAmountSeats", async (_req, res) => {
-  console.log("createInvitedsFromFile");
+  console.log("updateAmountSeats");
   console.log("req", _req.body);
   const { eventID, tableID, amountSeats } = _req.body;
   console.log(eventID, tableID, amountSeats);
@@ -164,6 +164,36 @@ app.post("/api/updateAmountSeats", async (_req, res) => {
             error
         );
     });
+});
+
+app.post("/api/deleteTable", async (_req, res) => {
+  console.log("deleteTable");
+  console.log("req", _req.body);
+  const { eventID, tableID } = _req.body;
+  console.log(eventID, tableID);
+  res.status(200).send("ok");
+  // dbFunc
+  //   .updateAmountSeats({
+  //     eventID,
+  //     tableID,
+  //     amountSeats,
+  //   })
+  //   .then((data) => {
+  //     // Assuming `data` is what the promise resolves with
+  //     console.log(`updateAmountSeats: ${data}`);
+  //     // Successfully added row, send back a success response
+  //     res.status(200).send("ok");
+  //   })
+  //   .catch((error) => {
+  //     // Properly catch and handle any errors
+  //     console.error(error); // Log the error for debugging
+  //     res
+  //       .status(500)
+  //       .send(
+  //         "error on update updateAmountSeats rows in TableOfEvent table: " +
+  //           error
+  //       );
+  //   });
 });
 
 app.get("/", (req, res) => {
