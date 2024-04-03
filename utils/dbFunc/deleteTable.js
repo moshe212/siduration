@@ -23,16 +23,16 @@ const deleteTable = async ({ eventID, tableID }) => {
     console.log("Record(s) deleted successfully from TableOfEvent.");
 
     // Access the Events table
-    const eventsTable = base("Events");
-    // Find the record to update in Events
-    const recordsToUpdate = await eventsTable
+    const invitedTable = base("Invited");
+    // Find the record to update in invited
+    const recordsToUpdate = await invitedTable
       .select({
         filterByFormula: `AND({TableID} = '${tableID}', {EventID} = '${eventID}')`,
       })
       .firstPage();
 
     for (const record of recordsToUpdate) {
-      await eventsTable.update([
+      await invitedTable.update([
         {
           id: record.id,
           fields: {
