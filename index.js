@@ -141,6 +141,7 @@ app.post("/api/updateAmountSeats", async (_req, res) => {
   console.log("req", _req.body);
   const { eventID, tableID, amountSeats } = _req.body;
   console.log(eventID, tableID, amountSeats);
+  res.status(200).send("ok");
   // dbFunc
   //   .createInvitedFromFile({
   //     userId,
