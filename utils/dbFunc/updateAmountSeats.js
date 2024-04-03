@@ -22,7 +22,7 @@ const updateAmountSeats = async ({ eventID, tableID, amountSeats }) => {
       const existAmountSeats = recordToUpdate.fields.AmountSeats || 0;
 
       const isFull =
-        parseInt(currentCountArrived) >= parseInt(existAmountSeats)
+        parseInt(currentCountArrived) >= parseInt(amountSeats)
           ? "true"
           : "false";
       await table.update([
@@ -30,6 +30,7 @@ const updateAmountSeats = async ({ eventID, tableID, amountSeats }) => {
           id: recordToUpdate.id,
           fields: {
             IsFull: isFull,
+            AmountSeats: amountSeats,
           },
         },
       ]);
