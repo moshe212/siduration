@@ -13,7 +13,7 @@ const addTableToInvited = async ({ eventID, invitedID, tableID }) => {
     // 1. Update the TableID column for the matching InvitedID
     const invitedRecords = await invitedTable
       .select({
-        filterByFormula: `{InvitedID} = '${invitedID}'`,
+        filterByFormula: `AND({InvitedID} = '${invitedID}', {EventID} = '${eventID}')`,
       })
       .firstPage();
 
