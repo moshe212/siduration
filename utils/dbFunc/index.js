@@ -3,6 +3,7 @@ const { updateInvitedArrivedCount } = require("./updateInvitedArrivedCount");
 const { createInvitedFromFile } = require("./createInvitedFromFile");
 const { updateAmountSeats } = require("./updateAmountSeats");
 const { deleteTable } = require("./deleteTable");
+const { addTableToInvited } = require("./addTableToInvited");
 
 const {
   addTableOfEventRows_Airtable,
@@ -15,6 +16,7 @@ const dbFunc = {
   createInvitedFromFile,
   updateAmountSeats,
   deleteTable,
+  addTableToInvited,
 };
 
 module.exports = { dbFunc };
