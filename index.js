@@ -217,6 +217,31 @@ app.post("/api/addInvitedToTable", async (_req, res) => {
     });
 });
 
+app.post("/api/sendTestMessage", async (_req, res) => {
+  console.log("sendTestMessage");
+  console.log("req", _req.body);
+  const { msgText } = _req.body;
+  console.log(msgText);
+  res.status(200).send("ok");
+  // dbFunc
+  //   .addTableToInvited({
+  //     eventID,
+  //     invitedID,
+  //     tableID,
+  //   })
+  //   .then((data) => {
+  //     // Assuming `data` is what the promise resolves with
+  //     console.log(`sendTestMessage: ${data}`);
+  //     // Successfully added row, send back a success response
+  //     res.status(200).send("ok");
+  //   })
+  //   .catch((error) => {
+  //     // Properly catch and handle any errors
+  //     console.error(error); // Log the error for debugging
+  //     res.status(500).send("error on sendTestMessage: " + error);
+  //   });
+});
+
 app.get("/", (req, res) => {
   res.redirect("/he");
 });
