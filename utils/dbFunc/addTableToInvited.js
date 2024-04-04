@@ -20,6 +20,7 @@ const addTableToInvited = async ({ eventID, invitedID, tableID }) => {
     let actualArrivedCount = 0;
     if (invitedRecords.length > 0) {
       const invitedRecord = invitedRecords[0];
+      console.log({ invitedRecord });
       await invitedTable.update([
         {
           id: invitedRecord.id,
@@ -31,6 +32,7 @@ const addTableToInvited = async ({ eventID, invitedID, tableID }) => {
 
       // 2. Get the Actual_Arrived_Count value
       actualArrivedCount = invitedRecord.fields.Actualy_Arrived_Count || 0;
+      console.log({ actualArrivedCount });
     }
 
     // Access the TableOfEvent table
@@ -44,13 +46,14 @@ const addTableToInvited = async ({ eventID, invitedID, tableID }) => {
 
     if (eventRecords.length > 0) {
       const eventRecord = eventRecords[0];
+      console.log({ eventRecord });
       const currentActualArrived = eventRecord.fields.ActualArrived || 0;
       const updatedActualArrived = currentActualArrived + actualArrivedCount;
 
       // 4. Calculate TotalActualArrived and determine if the table is full
       const amountSeats = eventRecord.fields.AmountSeats || 0;
       const isFull = updatedActualArrived >= amountSeats;
-
+      console.log({ isFull, amountSeats });
       // 5. Update the ActualArrived and IsFull columns in the TableOfEvent table
       await tableOfEvent.update([
         {
