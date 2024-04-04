@@ -30,7 +30,7 @@ const addTableToInvited = async ({ eventID, invitedID, tableID }) => {
       ]);
 
       // 2. Get the Actual_Arrived_Count value
-      actualArrivedCount = invitedRecord.fields.Actual_Arrived_Count || 0;
+      actualArrivedCount = invitedRecord.fields.Actualy_Arrived_Count || 0;
     }
 
     // Access the TableOfEvent table

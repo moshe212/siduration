@@ -206,16 +206,14 @@ app.post("/api/addInvitedToTable", async (_req, res) => {
     })
     .then((data) => {
       // Assuming `data` is what the promise resolves with
-      console.log(`deleteTable: ${data}`);
+      console.log(`addTableToInvited: ${data}`);
       // Successfully added row, send back a success response
       res.status(200).send("ok");
     })
     .catch((error) => {
       // Properly catch and handle any errors
       console.error(error); // Log the error for debugging
-      res
-        .status(500)
-        .send("error on deleteTable rows in Events table: " + error);
+      res.status(500).send("error on addTableToInvited: " + error);
     });
 });
 
