@@ -195,8 +195,8 @@ app.post("/api/deleteTable", async (_req, res) => {
 app.post("/api/addInvitedToTable", async (_req, res) => {
   console.log("addInvitedToTable");
   console.log("req", _req.body);
-  const { eventID, invitedID } = _req.body;
-  console.log(eventID, invitedID);
+  const { eventID, invitedID, tableID } = _req.body;
+  console.log(eventID, invitedID, tableID);
   res.status(200).send("ok");
   // dbFunc
   //   .deleteTable({
