@@ -247,7 +247,7 @@ app.post("/api/saveMsg", async (_req, res) => {
   console.log("req", _req.body);
   const { msgText, langID, msgTime, eventID } = _req.body;
   console.log(msgText, langID, msgTime);
-  res.status(200).send("ok");
+
   dbFunc
     .updateEventMessageAndTime({
       msgText,
