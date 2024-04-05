@@ -245,14 +245,15 @@ app.post("/api/sendTestMessage", async (_req, res) => {
 app.post("/api/saveMsg", async (_req, res) => {
   console.log("saveMsg");
   console.log("req", _req.body);
-  const { msgText, langID, msgTime } = _req.body;
+  const { msgText, langID, msgTime, eventID } = _req.body;
   console.log(msgText, langID, msgTime);
   res.status(200).send("ok");
   dbFunc
     .updateEventMessageAndTime({
-      eventID,
       msgText,
       langID,
+      msgTime,
+      eventID,
     })
     .then((data) => {
       // Assuming `data` is what the promise resolves with

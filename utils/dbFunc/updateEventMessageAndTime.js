@@ -1,6 +1,11 @@
 const axios = require("axios");
 
-const updateEventMessageAndTime = async ({ eventID, msgText, langID }) => {
+const updateEventMessageAndTime = async ({
+  msgText,
+  langID,
+  msgTime,
+  eventID,
+}) => {
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
   const airtableHeaders = {
@@ -60,7 +65,7 @@ const updateEventMessageAndTime = async ({ eventID, msgText, langID }) => {
         {
           fields: {
             [textColumnToUpdate]: msgText,
-            [timeColumnToUpdate]: new Date().toISOString(), // Update to current time
+            [timeColumnToUpdate]: new Date(msgTime).toISOString(), // Update to current time
           },
         },
         { headers: airtableHeaders }
