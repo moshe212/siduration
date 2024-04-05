@@ -220,8 +220,8 @@ app.post("/api/addInvitedToTable", async (_req, res) => {
 app.post("/api/sendTestMessage", async (_req, res) => {
   console.log("sendTestMessage");
   console.log("req", _req.body);
-  const { msgText, langID } = _req.body;
-  console.log(msgText, langID);
+  const { msgText, langID, eventID } = _req.body;
+  console.log(msgText, langID, eventID);
 
   waMessageFunc
     .sendTestMessage({
