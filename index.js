@@ -226,8 +226,8 @@ app.post("/api/sendTestMessage", async (_req, res) => {
   waMessageFunc
     .sendTestMessage({
       eventID,
-      invitedID,
-      tableID,
+      msgText,
+      langID,
     })
     .then((data) => {
       // Assuming `data` is what the promise resolves with

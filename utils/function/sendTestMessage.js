@@ -2,7 +2,7 @@ const axios = require("axios");
 const { sendMessageGreenAPI } = require("./sendMessageGreenAPI");
 const { extractDateAndHour } = require("./extractDateAndHour");
 
-const sendTestMessage = async (msgText, eventID) => {
+const sendTestMessage = async ({ eventID, msgText, langID }) => {
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
   const phoneNumber = "972523587990@c.us"; // Target phone number
