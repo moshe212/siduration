@@ -248,23 +248,23 @@ app.post("/api/saveMsg", async (_req, res) => {
   const { msgText, langID, msgTime } = _req.body;
   console.log(msgText, langID, msgTime);
   res.status(200).send("ok");
-  // dbFunc
-  //   .addTableToInvited({
-  //     eventID,
-  //     invitedID,
-  //     tableID,
-  //   })
-  //   .then((data) => {
-  //     // Assuming `data` is what the promise resolves with
-  //     console.log(`sendTestMessage: ${data}`);
-  //     // Successfully added row, send back a success response
-  //     res.status(200).send("ok");
-  //   })
-  //   .catch((error) => {
-  //     // Properly catch and handle any errors
-  //     console.error(error); // Log the error for debugging
-  //     res.status(500).send("error on sendTestMessage: " + error);
-  //   });
+  dbFunc
+    .updateEventMessageAndTime({
+      eventID,
+      msgText,
+      langID,
+    })
+    .then((data) => {
+      // Assuming `data` is what the promise resolves with
+      console.log(`saveMsg: ${data}`);
+      // Successfully added row, send back a success response
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      // Properly catch and handle any errors
+      console.error(error); // Log the error for debugging
+      res.status(500).send("error on saveMsg: " + error);
+    });
 });
 
 app.get("/", (req, res) => {
