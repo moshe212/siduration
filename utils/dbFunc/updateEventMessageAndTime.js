@@ -49,6 +49,21 @@ const updateEventMessageAndTime = async ({
     timeColumnToUpdate = "ThanksMsg_Time";
   }
 
+  function convertSerialDateToJSDate(serialDate) {
+    // Excel's epoch starts on December 30, 1899
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+    // Split the serial date into its integer and fractional components
+    const days = Math.floor(serialDate);
+    const fractionOfDay = serialDate - days;
+    // Milliseconds in a day
+    const msInDay = 24 * 60 * 60 * 1000;
+    // Calculate the date by adding the days to the epoch
+    const date = new Date(excelEpoch.getTime() + days * msInDay);
+    // Calculate the time by adding the fractional days to the date
+    const time = new Date(date.getTime() + fractionOfDay * msInDay);
+    return time;
+  }
+
   try {
     // Fetch the specific event row from the Events table
     const response = await axios.get(
@@ -58,6 +73,7 @@ const updateEventMessageAndTime = async ({
     const records = response.data.records;
 
     if (records.length > 0) {
+      const jsDate = convertSerialDateToJSDate(msgTime);
       const eventRecordId = records[0].id;
       // Update the specified text and time columns for the event
       await axios.patch(
@@ -65,7 +81,7 @@ const updateEventMessageAndTime = async ({
         {
           fields: {
             [textColumnToUpdate]: msgText,
-            [timeColumnToUpdate]: new Date(msgTime).toISOString(), // Update to current time
+            [timeColumnToUpdate]: jsDate.toISOString(), // Update to current time
           },
         },
         { headers: airtableHeaders }
