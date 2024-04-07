@@ -271,10 +271,12 @@ app.post("/api/saveMsg", async (_req, res) => {
 app.post("/api/processMessage", async (_req, res) => {
   const isIncomimgMsg = _req.body.typeWebhook === "incomingMessageReceived";
   const isTextMessage = _req.body.messageData?.typeMessage === "textMessage";
+  const isExtendedTextMessage =
+    _req.body.messageData?.typeMessage === "extendedTextMessage";
 
   console.log("processMessage");
   console.log("req", _req.body);
-  if (isIncomimgMsg && isTextMessage) {
+  if (isIncomimgMsg && (isTextMessage || isExtendedTextMessage)) {
     const chatId = _req.body.senderData.chatId;
     if (chatId === "972557232453@c.us") {
       const senderNum = _req.body.senderData.sender;
@@ -286,7 +288,9 @@ app.post("/api/processMessage", async (_req, res) => {
       // const phoneNumber = _req.body.senderData.sender
       //   .replace(/^972/, "0")
       //   .replace(/@c\.us$/, "");
-      const msgText = _req.body.messageData.textMessageData.textMessage;
+      const msgText = isTextMessage
+        ? _req.body.messageData.textMessageData.textMessage
+        : _req.body.messageData.extendedTextMessageData.text;
 
       console.log(msgText, phoneNumber);
       // res.status(200).send("ok");
