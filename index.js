@@ -279,9 +279,10 @@ app.post("/api/processMessage", async (_req, res) => {
       console.log("req", _req.body);
       const senderNum = _req.body.senderData.sender;
       console.log({ senderNum });
-      const phoneNumber = senderNum.match(/^972(\d{3})(\d{3})(\d{4})@c\.us$/)
-        ? `(${RegExp.$1}) ${RegExp.$2}-${RegExp.$3}`
-        : "Invalid phone number format";
+      const phoneNumber = `(0${senderNum.substring(
+        3,
+        5
+      )}) ${senderNum.substring(5, 8)}-${senderNum.substring(9, 12)}`;
       // const phoneNumber = _req.body.senderData.sender
       //   .replace(/^972/, "0")
       //   .replace(/@c\.us$/, "");
