@@ -278,30 +278,31 @@ app.post("/api/processMessage", async (_req, res) => {
     const typeMessage = _req.body.messageData.typeMessage;
     if (chatId !== "972557232453@c.us" || typeMessage !== "textMessage") {
       res.status(200).send("not test number");
+    } else {
+      const phoneNumber = _req.body.senderData.sender
+        .replace(/^972/, "0")
+        .replace(/@c\.us$/, "");
+      const msgText = _req.body.messageData.textMessageData.textMessage;
+
+      console.log(msgText, phoneNumber);
+
+      // waMessageFunc
+      //   .processMessageAndUpdateStatus({
+      //     msgText,
+      //     phoneNumber,
+      //   })
+      //   .then((data) => {
+      //     // Assuming `data` is what the promise resolves with
+      //     console.log(`saveMsg: ${data}`);
+      //     // Successfully added row, send back a success response
+      //     res.status(200).send("ok");
+      //   })
+      //   .catch((error) => {
+      //     // Properly catch and handle any errors
+      //     console.error(error); // Log the error for debugging
+      //     res.status(500).send("error on saveMsg: " + error);
+      //   });
     }
-    const phoneNumber = _req.body.senderData.sender
-      .replace(/^972/, "0")
-      .replace(/@c\.us$/, "");
-    const msgText = _req.body.messageData.textMessageData.textMessage;
-
-    console.log(msgText, phoneNumber);
-
-    // waMessageFunc
-    //   .processMessageAndUpdateStatus({
-    //     msgText,
-    //     phoneNumber,
-    //   })
-    //   .then((data) => {
-    //     // Assuming `data` is what the promise resolves with
-    //     console.log(`saveMsg: ${data}`);
-    //     // Successfully added row, send back a success response
-    //     res.status(200).send("ok");
-    //   })
-    //   .catch((error) => {
-    //     // Properly catch and handle any errors
-    //     console.error(error); // Log the error for debugging
-    //     res.status(500).send("error on saveMsg: " + error);
-    //   });
   }
 });
 
