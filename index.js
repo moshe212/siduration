@@ -281,9 +281,9 @@ app.post("/api/processMessage", async (_req, res) => {
     const phoneNumber = _req.body.senderData.sender
       .replace(/^972/, "0")
       .replace(/@c\.us$/, "");
-    // const msgText = _req.body.messageData.textMessageData.textMessage;
+    const msgText = _req.body.messageData.textMessageData.textMessage;
 
-    // console.log(msgText, phoneNumber);
+    console.log(msgText, phoneNumber);
 
     // waMessageFunc
     //   .processMessageAndUpdateStatus({
