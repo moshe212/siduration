@@ -8,6 +8,7 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
     "Content-Type": "application/json",
   };
 
+  console.log({ phoneNumber });
   try {
     const response = await axios.get(
       `https://api.airtable.com/v0/${airtableBaseId}/Invited?filterByFormula={Phone}='${phoneNumber}'`,
@@ -28,7 +29,6 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
         .replace(" ", "")
         .replace(/^0/, 972)}@c.us`;
 
-      console.log({ phoneNumber });
       console.log({ formattedPhoneNumber });
       // Check if msgText is a valid number and not more than two characters
       const numberFromText = parseInt(msgText, 10);
