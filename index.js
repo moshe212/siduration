@@ -271,6 +271,9 @@ app.post("/api/saveMsg", async (_req, res) => {
 app.post("/api/processMessage", async (_req, res) => {
   console.log("processMessage");
   console.log("req", _req.body);
+  if (_req.body.incomingMessageReceived !== "incomingMessageReceived") {
+    res.status(200).send("not test number");
+  }
   const chatId = _req.body.chatId;
   if (chatId !== "972557232453@c.us") {
     res.status(200).send("not test number");
