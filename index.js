@@ -274,8 +274,9 @@ app.post("/api/processMessage", async (_req, res) => {
   if (_req.body.typeWebhook !== "incomingMessageReceived") {
     res.status(200).send("not test number");
   } else {
-    const chatId = _req.body.chatId;
-    if (chatId !== "972557232453@c.us") {
+    const chatId = _req.body.senderData.chatId;
+    const typeMessage = _req.body.messageData.typeMessage;
+    if (chatId !== "972557232453@c.us" || typeMessage !== "textMessage") {
       res.status(200).send("not test number");
     }
     const phoneNumber = _req.body.senderData.sender
