@@ -80,6 +80,7 @@ const processMessageAndUpdateStatus = async ({ phoneNumber, msgText }) => {
               "תודה על שיתוף הפעולה צוות סידוריישן!  \n אם חל שינוי בהגעתך אנא עדכן בהודעה חוזרת",
             number: formattedPhoneNumber,
           });
+          break;
         case 3:
           // For botStatus 2 and 3, the logic is similar but with different messages
           if (isValidNumber && isWithinRange) {

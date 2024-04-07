@@ -307,11 +307,11 @@ app.post("/api/processMessage", async (_req, res) => {
           res.status(500).send("error on processMessage: " + error);
         });
     } else {
-      // console.log("is not test number");
+      console.log("is not test number");
       res.status(200).send("is not test number");
     }
   } else {
-    // console.log("is not incoming message");
+    console.log("is not incoming message");
     res.status(200).send("is not incoming message");
   }
 });
