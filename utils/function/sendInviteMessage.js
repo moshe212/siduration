@@ -43,12 +43,14 @@ const sendInviteMessage = async () => {
   const updateInviteMsgStatus = async (recordId, status) => {
     const statusMessage = status ? "Sent" : "Failed";
     const dateTimeNow = getCurrentDateTimeISO(); // Get current date and time
+    const botStatusValue = status ? 1 : 0;
     try {
       await axios.patch(
         `https://api.airtable.com/v0/${airtableBaseId}/Invited/${recordId}`,
         {
           fields: {
             InviteMsgStatus: dateTimeNow,
+            BotStatus: botStatusValue,
           },
         },
         { headers: airtableHeaders }
