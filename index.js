@@ -272,7 +272,7 @@ app.post("/api/processMessage", async (_req, res) => {
   console.log("processMessage");
   console.log("req", _req.body);
   const chatId = _req.body.senderData.chatId;
-  if (chatId == !"972557232453@c.us") {
+  if (chatId !== "972557232453@c.us") {
     res.status(200).send("not test number");
   }
   const phoneNumber = _req.body.senderData.sender
