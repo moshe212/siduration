@@ -282,7 +282,7 @@ app.post("/api/processMessage", async (_req, res) => {
       const phoneNumber = `(0${senderNum.substring(
         3,
         5
-      )}) ${senderNum.substring(5, 8)}-${senderNum.substring(9, 13)}`;
+      )}) ${senderNum.substring(5, 8)}-${senderNum.substring(8, 12)}`;
       // const phoneNumber = _req.body.senderData.sender
       //   .replace(/^972/, "0")
       //   .replace(/@c\.us$/, "");
