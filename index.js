@@ -270,7 +270,7 @@ app.post("/api/saveMsg", async (_req, res) => {
 
 app.post("/api/processMessage", async (_req, res) => {
   const isIncomimgMsg = _req.body.typeWebhook === "incomingMessageReceived";
-  const isTextMessage = _req.body.messageData.typeMessage === "textMessage";
+  const isTextMessage = _req.body.messageData?.typeMessage === "textMessage";
 
   if (isIncomimgMsg && isTextMessage) {
     const chatId = _req.body.senderData.chatId;
