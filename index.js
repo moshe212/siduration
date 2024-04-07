@@ -302,10 +302,11 @@ app.post("/api/processMessage", async (_req, res) => {
       //   });
     } else {
       console.log("is not test number");
-      res.status(200).send("ok");
+      res.status(200).send("is not test number");
     }
   } else {
     console.log("is not incoming message");
+    res.status(200).send("is not incoming message");
   }
 });
 
