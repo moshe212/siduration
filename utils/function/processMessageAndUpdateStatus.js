@@ -128,11 +128,11 @@ const updateRecord = async (
 ) => {
   // Update the record in Airtable with new information
   const fieldsToUpdate = {
-    BotStatus: newBotStatus,
+    BotStatus: parseInt(newBotStatus),
   };
   if (countArriveAnswer !== null) {
-    fieldsToUpdate.CountArriveAnswer = countArriveAnswer;
-    fieldsToUpdate.Is_Arriving = countArriveAnswer > 0;
+    fieldsToUpdate.CountArriveAnswer = parseInt(countArriveAnswer);
+    fieldsToUpdate.Is_Arriving = countArriveAnswer > 0 ? "true" : "false";
   }
 
   await axios.patch(
