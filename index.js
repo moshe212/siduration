@@ -271,7 +271,7 @@ app.post("/api/saveMsg", async (_req, res) => {
 app.post("/api/processMessage", async (_req, res) => {
   console.log("processMessage");
   console.log("req", _req.body);
-  if (_req.body.incomingMessageReceived !== "incomingMessageReceived") {
+  if (_req.body.typeWebhook !== "incomingMessageReceived") {
     res.status(200).send("not test number");
   } else {
     const chatId = _req.body.chatId;
