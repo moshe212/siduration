@@ -269,14 +269,12 @@ app.post("/api/saveMsg", async (_req, res) => {
 });
 
 app.post("/api/processMessage", async (_req, res) => {
-  if (_req.body.typeWebhook !== "incomingMessageReceived") {
-    res.status(200).send("not test number");
-  } else {
+  const isIncomimgMsg = _req.body.typeWebhook === "incomingMessageReceived";
+  const isTextMessage = _req.body.messageData.typeMessage === "textMessage";
+
+  if (isIncomimgMsg && isTextMessage) {
     const chatId = _req.body.senderData.chatId;
-    const typeMessage = _req.body.messageData.typeMessage;
-    if (chatId !== "972557232453@c.us" || typeMessage !== "textMessage") {
-      res.status(200).send("not test number");
-    } else {
+    if (chatId === "972557232453@c.us") {
       console.log("processMessage");
       console.log("req", _req.body);
       const phoneNumber = _req.body.senderData.sender
@@ -302,7 +300,12 @@ app.post("/api/processMessage", async (_req, res) => {
       //     console.error(error); // Log the error for debugging
       //     res.status(500).send("error on saveMsg: " + error);
       //   });
+    } else {
+      console.log("is not test number");
+      res.status(200).send("ok");
     }
+  } else {
+    console.log("is not incoming message");
   }
 });
 
