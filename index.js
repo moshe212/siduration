@@ -277,9 +277,9 @@ app.post("/api/processMessage", async (_req, res) => {
     if (chatId === "972557232453@c.us") {
       console.log("processMessage");
       console.log("req", _req.body);
-      const phoneNumber = _req.body.senderData.sender.match(
-        /^972(\d{3})(\d{3})(\d{4})@c\.us$/
-      )
+      const senderNum = _req.body.senderData.sender;
+      console.log({ senderNum });
+      const phoneNumber = senderNum.match(/^972(\d{3})(\d{3})(\d{4})@c\.us$/)
         ? `(${RegExp.$1}) ${RegExp.$2}-${RegExp.$3}`
         : "Invalid phone number format";
       // const phoneNumber = _req.body.senderData.sender
