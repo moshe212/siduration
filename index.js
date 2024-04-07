@@ -283,29 +283,29 @@ app.post("/api/processMessage", async (_req, res) => {
       const msgText = _req.body.messageData.textMessageData.textMessage;
 
       console.log(msgText, phoneNumber);
-      res.status(200).send("ok");
-      // waMessageFunc
-      //   .processMessageAndUpdateStatus({
-      //     msgText,
-      //     phoneNumber,
-      //   })
-      //   .then((data) => {
-      //     // Assuming `data` is what the promise resolves with
-      //     console.log(`saveMsg: ${data}`);
-      //     // Successfully added row, send back a success response
-      //     res.status(200).send("ok");
-      //   })
-      //   .catch((error) => {
-      //     // Properly catch and handle any errors
-      //     console.error(error); // Log the error for debugging
-      //     res.status(500).send("error on saveMsg: " + error);
-      //   });
+      // res.status(200).send("ok");
+      waMessageFunc
+        .processMessageAndUpdateStatus({
+          msgText,
+          phoneNumber,
+        })
+        .then((data) => {
+          // Assuming `data` is what the promise resolves with
+          console.log(`saveMsg: ${data}`);
+          // Successfully added row, send back a success response
+          res.status(200).send("ok");
+        })
+        .catch((error) => {
+          // Properly catch and handle any errors
+          console.error(error); // Log the error for debugging
+          res.status(500).send("error on saveMsg: " + error);
+        });
     } else {
-      console.log("is not test number");
+      // console.log("is not test number");
       res.status(200).send("is not test number");
     }
   } else {
-    console.log("is not incoming message");
+    // console.log("is not incoming message");
     res.status(200).send("is not incoming message");
   }
 });
