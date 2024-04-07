@@ -19,8 +19,11 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
       const record = records[0];
       const botStatus = record.fields.BotStatus;
 
-      const formattedPhoneNumber = phoneNumber.replace(/^0/, "972") + "@c.us";
-
+      // const formattedPhoneNumber = phoneNumber.replace(/^0/, "972") + "@c.us";
+      const formattedPhoneNumber = `972${phoneNumber
+        .match(/\d+/g)
+        .join("")
+        .substring(1)}@c.us`;
       // Check if msgText is a valid number and not more than two characters
       const numberFromText = parseInt(msgText, 10);
       const isValidNumber =

@@ -277,9 +277,14 @@ app.post("/api/processMessage", async (_req, res) => {
     if (chatId === "972557232453@c.us") {
       console.log("processMessage");
       console.log("req", _req.body);
-      const phoneNumber = _req.body.senderData.sender
-        .replace(/^972/, "0")
-        .replace(/@c\.us$/, "");
+      const phoneNumber = _req.body.senderData.sender.match(
+        /^972(\d{3})(\d{3})(\d{4})@c\.us$/
+      )
+        ? `(${RegExp.$1}) ${RegExp.$2}-${RegExp.$3}`
+        : "Invalid phone number format";
+      // const phoneNumber = _req.body.senderData.sender
+      //   .replace(/^972/, "0")
+      //   .replace(/@c\.us$/, "");
       const msgText = _req.body.messageData.textMessageData.textMessage;
 
       console.log(msgText, phoneNumber);
@@ -291,14 +296,14 @@ app.post("/api/processMessage", async (_req, res) => {
         })
         .then((data) => {
           // Assuming `data` is what the promise resolves with
-          console.log(`saveMsg: ${data}`);
+          console.log(`processMessage: ${data}`);
           // Successfully added row, send back a success response
           res.status(200).send("ok");
         })
         .catch((error) => {
           // Properly catch and handle any errors
           console.error(error); // Log the error for debugging
-          res.status(500).send("error on saveMsg: " + error);
+          res.status(500).send("error on processMessage: " + error);
         });
     } else {
       // console.log("is not test number");
