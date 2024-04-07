@@ -272,11 +272,11 @@ app.post("/api/processMessage", async (_req, res) => {
   const isIncomimgMsg = _req.body.typeWebhook === "incomingMessageReceived";
   const isTextMessage = _req.body.messageData?.typeMessage === "textMessage";
 
+  console.log("processMessage");
+  console.log("req", _req.body);
   if (isIncomimgMsg && isTextMessage) {
     const chatId = _req.body.senderData.chatId;
     if (chatId === "972557232453@c.us") {
-      console.log("processMessage");
-      console.log("req", _req.body);
       const senderNum = _req.body.senderData.sender;
       console.log({ senderNum });
       const phoneNumber = `(0${senderNum.substring(
