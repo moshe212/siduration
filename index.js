@@ -283,7 +283,7 @@ app.post("/api/processMessage", async (_req, res) => {
       const msgText = _req.body.messageData.textMessageData.textMessage;
 
       console.log(msgText, phoneNumber);
-
+      res.status(200).send("ok");
       // waMessageFunc
       //   .processMessageAndUpdateStatus({
       //     msgText,
