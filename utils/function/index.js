@@ -5,7 +5,7 @@ const { extractDateAndHour } = require("./extractDateAndHour");
 const { sendTestMessage } = require("./sendTestMessage");
 const {
   processMessageAndUpdateStatus,
-} = require("./processMessageAndUpdateStatusת");
+} = require("./processMessageAndUpdateStatus");
 
 const waMessageFunc = {
   sendRemindMessage,
