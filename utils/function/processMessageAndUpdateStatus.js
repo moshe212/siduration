@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { sendMessageGreenAPI } = require("./sendMessageGreenAPI");
 
 const processMessageAndUpdateStatus = async ({ phoneNumber, msgText }) => {
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
