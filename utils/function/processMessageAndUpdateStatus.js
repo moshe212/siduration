@@ -9,7 +9,6 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
   };
 
   try {
-    // Fetch the row from the Invited table where the Phone column matches phoneNumber
     const response = await axios.get(
       `https://api.airtable.com/v0/${airtableBaseId}/Invited?filterByFormula={Phone}='${phoneNumber}'`,
       { headers: airtableHeaders }
@@ -20,63 +19,87 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
       const record = records[0];
       const botStatus = record.fields.BotStatus;
 
-      // Define the WhatsApp number format
-      const formattedPhoneNumber = `972${phoneNumber.substring(1)}@c.us`;
+      const formattedPhoneNumber = phoneNumber.replace(/^0/, "972") + "@c.us";
 
-      if (botStatus === 1) {
-        // Logic for botStatus === 1 (existing logic)
-        handleBotStatus1(
-          record,
-          msgText,
-          formattedPhoneNumber,
-          airtableBaseId,
-          airtableHeaders
-        );
-      } else if (botStatus === 2) {
-        // Logic for botStatus === 2
-        await sendMessageGreenAPI({
-          message:
-            "Thank you for your cooperation, Serialization team! If there is a change in your arrival please update with a return message",
-          number: formattedPhoneNumber,
-        });
+      // Check if msgText is a valid number and not more than two characters
+      const numberFromText = parseInt(msgText, 10);
+      const isValidNumber =
+        Number.isInteger(numberFromText) &&
+        msgText.trim().length <= 2 &&
+        msgText.trim().length > 0;
+      const isWithinRange = numberFromText >= 0 && numberFromText <= 99;
+      const countArriveAnswer =
+        isValidNumber && isWithinRange ? parseInt(msgText, 10) : null;
 
-        // Update BotStatus to 3
-        await axios.patch(
-          `https://api.airtable.com/v0/${airtableBaseId}/Invited/${record.id}`,
-          {
-            fields: {
-              BotStatus: 3,
-            },
-          },
-          { headers: airtableHeaders }
-        );
-      } else if (botStatus === 3) {
-        // Logic for botStatus === 3
-        if (/^\d{1,2}$/.test(msgText)) {
-          // If msgText is a valid number (1 or 2 digits)
-          const countArriveAnswer = parseInt(msgText, 10);
+      switch (botStatus) {
+        case 1:
+          if (isValidNumber && isWithinRange) {
+            await updateRecord(
+              record.id,
+              countArriveAnswer,
+              botStatus + 1,
+              airtableBaseId,
+              airtableHeaders
+            );
+
+            // Send a thank you message
+            await sendMessageGreenAPI({
+              message: "תודה על שיתוף הפעולה צוות סידוריישן!",
+              number: formattedPhoneNumber,
+            });
+          } else {
+            // Request a correct numerical response
+            await sendMessageGreenAPI({
+              message:
+                "נא לענות נכון, התשובה צריכה להכיל רק מספר (1 או 2 ספרות) המייצג את כמות האורחים המגיעים לאירוע.",
+              number: formattedPhoneNumber,
+            });
+          }
+          break;
+        case 2:
           await updateRecord(
             record.id,
             countArriveAnswer,
+            botStatus + 1,
             airtableBaseId,
             airtableHeaders
           );
 
-          // Send a thank you message
-          await sendMessageGreenAPI({
-            message: "Thank you for your cooperation, Team Serialization!",
-            number: formattedPhoneNumber,
-          });
-        } else {
-          // Request a correct numerical response
           await sendMessageGreenAPI({
             message:
-              "Please answer correctly, the answer should contain only a number representing the amount of guests coming to the event.",
+              "תודה על שיתוף הפעולה צוות סידוריישן!  \n אם חל שינוי בהגעתך אנא עדכן בהודעה חוזרת",
             number: formattedPhoneNumber,
           });
-        }
+        case 3:
+          // For botStatus 2 and 3, the logic is similar but with different messages
+          if (isValidNumber && isWithinRange) {
+            // Update the record with the count and increment botStatus
+            await updateRecord(
+              record.id,
+              countArriveAnswer,
+              botStatus + 1,
+              airtableBaseId,
+              airtableHeaders
+            );
+            // Send a thank you message
+            await sendMessageGreenAPI({
+              message: "תודה על שיתוף הפעולה צוות סידוריישן!",
+              number: formattedPhoneNumber,
+            });
+          } else {
+            // Request a correct numerical response
+            await sendMessageGreenAPI({
+              message:
+                "נא לענות נכון, התשובה צריכה להכיל רק מספר (1 או 2 ספרות) המייצג את כמות האורחים המגיעים לאירוע.",
+              number: formattedPhoneNumber,
+            });
+          }
+          break;
+        // Add additional cases for botStatus as needed
+        default:
+          console.log(`Unhandled botStatus: ${botStatus}`);
+          break;
       }
-      // Additional logic for botStatus === 4 and beyond can be added here
     } else {
       console.log("No record found for the provided phone number.");
     }
@@ -85,33 +108,25 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
   }
 };
 
-const handleBotStatus1 = async (
-  record,
-  msgText,
-  formattedPhoneNumber,
-  airtableBaseId,
-  airtableHeaders
-) => {
-  // Implement the specific logic for BotStatus 1 here
-  // This is a placeholder for the logic you already have for BotStatus 1
-};
-
 const updateRecord = async (
   recordId,
   countArriveAnswer,
+  newBotStatus,
   airtableBaseId,
   airtableHeaders
 ) => {
-  // Update the CountArriveAnswer and BotStatus in the Airtable record
+  // Update the record in Airtable with new information
+  const fieldsToUpdate = {
+    BotStatus: newBotStatus,
+  };
+  if (countArriveAnswer !== null) {
+    fieldsToUpdate.CountArriveAnswer = countArriveAnswer;
+    fieldsToUpdate.Is_Arriving = countArriveAnswer > 0;
+  }
+
   await axios.patch(
     `https://api.airtable.com/v0/${airtableBaseId}/Invited/${recordId}`,
-    {
-      fields: {
-        CountArriveAnswer: countArriveAnswer,
-        Is_Arriving: countArriveAnswer > 0,
-        BotStatus: countArriveAnswer > 0 ? 4 : 3, // Example logic, adjust as needed
-      },
-    },
+    { fields: fieldsToUpdate },
     { headers: airtableHeaders }
   );
 };

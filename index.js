@@ -271,7 +271,9 @@ app.post("/api/saveMsg", async (_req, res) => {
 app.post("/api/processMessage", async (_req, res) => {
   console.log("processMessage");
   // console.log("req", _req.body);
-  const phoneNumber = _req.body.senderData.sender;
+  const phoneNumber = _req.body.senderData.sender
+    .replace(/^972/, "0")
+    .replace(/@c\.us$/, "");
   const msgText = _req.body.messageData.textMessageData.textMessage;
   const chatId = _req.body.senderData.chatId;
 
