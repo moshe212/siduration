@@ -21,10 +21,12 @@ const processMessageAndUpdateStatus = async (phoneNumber, msgText) => {
 
       // const formattedPhoneNumber = phoneNumber.replace(/^0/, "972") + "@c.us";
 
-      const formattedPhoneNumber = `972${phoneNumber
-        .match(/\d+/g)
-        .join("")
-        .substring(1)}@c.us`;
+      const formattedPhoneNumber = `${phoneNumber
+        .replace("(", "")
+        .replace(")", "")
+        .replace("-", "")
+        .replace(" ", "")
+        .replace(/^0/, 972)}@c.us`;
 
       console.log({ phoneNumber });
       console.log({ formattedPhoneNumber });
