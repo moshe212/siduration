@@ -320,26 +320,28 @@ app.post("/api/processMessage", async (_req, res) => {
   }
 });
 
-app.post("/api/getSumOfAmountInvitedByEventID", async (_req, res) => {
-  console.log("getSumOfAmountInvitedByEventID");
+app.post("/api/updateTotalInvitedInEventsTable", async (_req, res) => {
+  console.log("updateTotalInvitedInEventsTable");
   console.log("req", _req.body);
   const { eventID } = _req.body;
   console.log(eventID);
 
   dbFunc
-    .getSumOfAmountInvitedByEventID({
+    .updateTotalInvitedInEventsTable({
       eventID,
     })
     .then((data) => {
       // Assuming `data` is what the promise resolves with
-      console.log(`getSumOfAmountInvitedByEventID: ${data}`);
+      console.log(`updateTotalInvitedInEventsTable: ${data}`);
       // Successfully added row, send back a success response
       res.status(200).send("ok");
     })
     .catch((error) => {
       // Properly catch and handle any errors
       console.error(error); // Log the error for debugging
-      res.status(500).send("error on getSumOfAmountInvitedByEventID: " + error);
+      res
+        .status(500)
+        .send("error on updateTotalInvitedInEventsTable: " + error);
     });
 });
 
