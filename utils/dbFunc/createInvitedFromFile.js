@@ -44,7 +44,8 @@ const createInvitedFromFile = async ({
 
   const addRowToInvitedTable = async (rowData, eventId, userId, index) => {
     console.log("addRowToInvitedTable");
-    const userIDForInsert = userId ? userId : await getUserID(eventIdFromAdalo);
+    const userIDForInsert =
+      userId !== 1 ? userId : await getUserID(eventIdFromAdalo);
     const invitedTable = airtableBase("Invited");
     const airtableRowData = {
       InvitedID: index,
