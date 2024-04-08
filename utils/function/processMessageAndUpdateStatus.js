@@ -20,8 +20,13 @@ const processMessageAndUpdateStatus = async ({ phoneNumber, msgText }) => {
     if (records.length > 0) {
       const record = records[0];
       const botStatus = record.fields.BotStatus;
+      const eventID = record.fields.EventID;
 
-      // const formattedPhoneNumber = phoneNumber.replace(/^0/, "972") + "@c.us";
+      const eventResponse = await axios.get(
+        `https://api.airtable.com/v0/${airtableBaseId}/Events?filterByFormula={EventID}='${eventID}'`,
+        { headers: airtableHeaders }
+      );
+      const eventsRecords = eventResponse.data.records;
 
       const formattedPhoneNumber = `${phoneNumber
         .replace("(", "")
@@ -48,6 +53,13 @@ const processMessageAndUpdateStatus = async ({ phoneNumber, msgText }) => {
               record.id,
               countArriveAnswer,
               botStatus + 1,
+              airtableBaseId,
+              airtableHeaders
+            );
+
+            await updateEventRecord(
+              eventsRecords,
+              countArriveAnswer,
               airtableBaseId,
               airtableHeaders
             );
@@ -92,6 +104,14 @@ const processMessageAndUpdateStatus = async ({ phoneNumber, msgText }) => {
               airtableBaseId,
               airtableHeaders
             );
+
+            await updateEventRecord(
+              eventsRecords,
+              countArriveAnswer,
+              airtableBaseId,
+              airtableHeaders
+            );
+
             // Send a thank you message
             await sendMessageGreenAPI({
               message: "תודה על שיתוף הפעולה צוות סידוריישן!",
@@ -140,6 +160,39 @@ const updateRecord = async (
     { fields: fieldsToUpdate },
     { headers: airtableHeaders }
   );
+};
+
+const updateEventRecord = async (
+  eventsRecords,
+  countArriveAnswer,
+  airtableBaseId,
+  airtableHeaders
+) => {
+  if (eventsRecords.length > 0 && countArriveAnswer !== null) {
+    const eventRecord = eventsRecords[0];
+    const amountInvited = record.fields.Amount_Invited;
+    const currentNoAmount = eventRecord.fields.NoAmount;
+    const currentYesAmount = eventRecord.fields.YesAmount;
+    const currentMaybeAmount = eventRecord.fields.MaybeAmount;
+
+    const fieldsToUpdate = {
+      NoAmount:
+        countArriveAnswer === 0
+          ? parseInt(currentNoAmount) + parseInt(amountInvited)
+          : "",
+      YesAmount:
+        countArriveAnswer > 0
+          ? parseInt(currentYesAmount) + countArriveAnswer
+          : "",
+      // MaybeAmount:
+    };
+
+    await axios.patch(
+      `https://api.airtable.com/v0/${airtableBaseId}/Events/${eventRecord.id}`,
+      { fields: fieldsToUpdate },
+      { headers: airtableHeaders }
+    );
+  }
 };
 
 module.exports = { processMessageAndUpdateStatus };

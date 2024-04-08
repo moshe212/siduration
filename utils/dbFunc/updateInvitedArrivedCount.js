@@ -13,6 +13,7 @@ const updateInvitedArrivedCount = async ({
   const base = Airtable.base(process.env.AIRTABLE_BASE_ID);
   const firstTable = base("TableOfEvent");
   const secondTable = base("Invited");
+  const thirdTable = base("Events");
 
   try {
     // First, find the record ID(s) for the row(s) matching TableID and EventID
@@ -68,6 +69,30 @@ const updateInvitedArrivedCount = async ({
 
       await secondTable.update(updates);
     }
+
+    const recordsToFindInThirdTable = await thirdTable
+      .select({
+        filterByFormula: `{EventID} = '${EventID}'`,
+      })
+      .firstPage();
+
+    if (recordsToFindInThirdTable.length > 0) {
+      const recordToUpdateInThirdTable = recordsToFindInThirdTable[0];
+      const currentCountArrived =
+        recordToUpdateInThirdTable.fields.TotalArrived;
+      const newCountArrived =
+        parseInt(currentCountArrived) + parseInt(ActualArrivedCount);
+
+      const updates = recordsToFindInThirdTable.map((record) => ({
+        id: record.id,
+        fields: {
+          TotalArrived: newCountArrived,
+        },
+      }));
+
+      await thirdTable.update(updates);
+    }
+
     console.log("Update successful:");
     return { success: true };
   } catch (error) {
