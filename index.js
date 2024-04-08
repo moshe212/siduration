@@ -111,7 +111,7 @@ app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
 app.post("/api/createInvitedsFromFile", async (_req, res) => {
   console.log("createInvitedsFromFile");
   console.log("req", _req.body);
-  // const userId = _req.body.userId || 0; // Default to 0 if undefined
+  const userId = _req.body.userId || 0; // Default to 0 if undefined
   // const excelFileUrl = _req.body.excelFileUrl || ""; // Default to an empty string if undefined
   // const eventId = _req.body.eventId || "";
   // console.log(userId, excelFileUrl, eventId);
