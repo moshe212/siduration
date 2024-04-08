@@ -111,31 +111,31 @@ app.post("/api/updateInvitedArrivedCount", async (_req, res) => {
 app.post("/api/createInvitedsFromFile", async (_req, res) => {
   console.log("createInvitedsFromFile");
   console.log("req", _req.body);
-  const userId = _req.body.userId || 0; // Default to 0 if undefined
-  const excelFileUrl = _req.body.excelFileUrl || ""; // Default to an empty string if undefined
-  const eventId = _req.body.eventId || "";
-  console.log(userId, excelFileUrl, eventId);
-  dbFunc
-    .createInvitedFromFile({
-      userId,
-      excelFileUrl,
-      eventIdFromAdalo: eventId,
-    })
-    .then((data) => {
-      // Assuming `data` is what the promise resolves with
-      console.log(`createInvitedFromFile: ${data}`);
-      // Successfully added row, send back a success response
-      res.status(200).send("ok");
-    })
-    .catch((error) => {
-      // Properly catch and handle any errors
-      console.error(error); // Log the error for debugging
-      res
-        .status(500)
-        .send(
-          "error on create createInvitedFromFile rows in Events table: " + error
-        );
-    });
+  // const userId = _req.body.userId || 0; // Default to 0 if undefined
+  // const excelFileUrl = _req.body.excelFileUrl || ""; // Default to an empty string if undefined
+  // const eventId = _req.body.eventId || "";
+  // console.log(userId, excelFileUrl, eventId);
+  // dbFunc
+  //   .createInvitedFromFile({
+  //     userId,
+  //     excelFileUrl,
+  //     eventIdFromAdalo: eventId,
+  //   })
+  //   .then((data) => {
+  //     // Assuming `data` is what the promise resolves with
+  //     console.log(`createInvitedFromFile: ${data}`);
+  //     // Successfully added row, send back a success response
+  //     res.status(200).send("ok");
+  //   })
+  //   .catch((error) => {
+  //     // Properly catch and handle any errors
+  //     console.error(error); // Log the error for debugging
+  //     res
+  //       .status(500)
+  //       .send(
+  //         "error on create createInvitedFromFile rows in Events table: " + error
+  //       );
+  //   });
 });
 
 app.post("/api/updateAmountSeats", async (_req, res) => {
