@@ -1,6 +1,6 @@
 const Airtable = require("airtable");
 
-const updateTotalInvitedInEventsTable = async (eventID) => {
+const updateTotalInvitedInEventsTable = async ({ eventID }) => {
   Airtable.configure({
     endpointUrl: "https://api.airtable.com",
     apiKey: process.env.AIRTABLE_API_KEY,
