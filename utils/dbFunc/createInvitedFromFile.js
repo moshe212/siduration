@@ -28,8 +28,23 @@ const createInvitedFromFile = async ({
     return records.length > 0 ? records[0].fields.EventID : null;
   };
 
+  const getUserID = async (eventIdFromAdalo) => {
+    console.log("getUserID");
+    console.log("eventId: " + eventIdFromAdalo);
+    const eventsTable = airtableBase("Events");
+    const records = await eventsTable
+      .select({
+        filterByFormula: `{EventID} = '${eventIdFromAdalo}'`,
+      })
+      .firstPage();
+
+    // Assuming the first matching record has the EventID you need
+    return records.length > 0 ? records[0].fields.UserID : null;
+  };
+
   const addRowToInvitedTable = async (rowData, eventId, userId, index) => {
     console.log("addRowToInvitedTable");
+    const userIDForInsert = userId ? userId : await getUserID(eventIdFromAdalo);
     const invitedTable = airtableBase("Invited");
     const airtableRowData = {
       InvitedID: index,
@@ -47,7 +62,7 @@ const createInvitedFromFile = async ({
       Notes: rowData["Notes"], // Assuming direct match, adjust if needed
       MsgLang: 1,
       DoSendMessage: rowData["DoSendMessage"],
-      UserID: userId, // This comes from the parameter, no need to adjust
+      UserID: userIDForInsert, // This comes from the parameter, no need to adjust
     };
 
     // Filter out undefined values since Airtable API doesn't accept them
