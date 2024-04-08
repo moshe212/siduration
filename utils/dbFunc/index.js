@@ -5,6 +5,9 @@ const { updateAmountSeats } = require("./updateAmountSeats");
 const { deleteTable } = require("./deleteTable");
 const { addTableToInvited } = require("./addTableToInvited");
 const { updateEventMessageAndTime } = require("./updateEventMessageAndTime");
+const {
+  getSumOfAmountInvitedByEventID,
+} = require("./getSumOfAmountInvitedByEventID");
 
 const {
   addTableOfEventRows_Airtable,
@@ -19,6 +22,7 @@ const dbFunc = {
   deleteTable,
   addTableToInvited,
   updateEventMessageAndTime,
+  getSumOfAmountInvitedByEventID,
 };
 
 module.exports = { dbFunc };
