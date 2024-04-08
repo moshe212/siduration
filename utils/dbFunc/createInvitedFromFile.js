@@ -33,6 +33,7 @@ const createInvitedFromFile = async ({
     const invitedTable = airtableBase("Invited");
     const airtableRowData = {
       InvitedID: index,
+      Full_Name: rowData["Full_Name"],
       First_Name: rowData["FirstName"], // Example mapping, adjust 'FirstName' as needed
       Last_Name: rowData["LastName"], // Example mapping, adjust 'LastName' as needed
       EventID: eventId, // This comes from the previous function, no need to adjust
