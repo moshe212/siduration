@@ -59,7 +59,10 @@ const sendMail = (an, mail) => {
 app.post("/api/createTableOfEventRows", async (_req, res) => {
   console.log("Adalo");
   console.log("req", _req.body);
-  const { UserID, EventID, TableCount } = _req.body;
+  const UserID = _req.body.UserID || 0; // Default to 0 if undefined
+  const EventID = _req.body.EventID || 0; // Default to 0 if undefined
+  const TableCount = _req.body.TableCount || 0; // Default to 0 if undefined
+  // const { UserID, EventID, TableCount } = _req.body;
 
   dbFunc
     .addTableOfEventRows_Airtable({ UserID, EventID, TableCount })

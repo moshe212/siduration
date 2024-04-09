@@ -17,11 +17,12 @@ const addTableOfEventRows_Airtable = async ({
   const eventsTable = base("Events");
 
   try {
+    const FinalEventID = EventID !== 0 ? EventID : getEventIdForUser(UserID);
     // Check if there are any existing rows for the given EventID in TableOfEvent
     let existingRowCount = 0;
     await tableOfEvent
       .select({
-        filterByFormula: `{EventID} = '${EventID}'`,
+        filterByFormula: `{EventID} = '${FinalEventID}'`,
       })
       .eachPage((records, fetchNextPage) => {
         existingRowCount += records.length;
@@ -33,8 +34,9 @@ const addTableOfEventRows_Airtable = async ({
       // Create an array of objects to insert
       let rowsToInsert = Array.from({ length: TableCount }, (_, index) => ({
         fields: {
-          EventID,
+          EventID: FinalEventID,
           TableID: index + 1,
+          UserID: FinalEventID,
         },
       }));
 
@@ -45,7 +47,7 @@ const addTableOfEventRows_Airtable = async ({
       // Find the correct record ID in the Events table associated with EventID
       const eventRecords = await eventsTable
         .select({
-          filterByFormula: `{EventID} = '${EventID}'`,
+          filterByFormula: `{EventID} = '${FinalEventID}'`,
         })
         .firstPage();
 
@@ -63,11 +65,11 @@ const addTableOfEventRows_Airtable = async ({
         ]);
 
         console.log(
-          `IsTableAdded set to true for EventID: ${EventID} in Events table.`
+          `IsTableAdded set to true for EventID: ${FinalEventID} in Events table.`
         );
       } else {
         console.log(
-          `No matching event found for EventID: ${EventID} in Events table.`
+          `No matching event found for EventID: ${FinalEventID} in Events table.`
         );
       }
 
@@ -85,6 +87,20 @@ const addTableOfEventRows_Airtable = async ({
     console.error("Error in operation:", error);
     return { error };
   }
+};
+
+const getEventIdForUser = async (userId) => {
+  console.log("getEventIdForUser");
+  console.log("userId: " + userId);
+  const eventsTable = airtableBase("Events");
+  const records = await eventsTable
+    .select({
+      filterByFormula: `{UserID} = '${userId}'`,
+    })
+    .firstPage();
+
+  // Assuming the first matching record has the EventID you need
+  return records.length > 0 ? records[0].fields.EventID : null;
 };
 
 module.exports = { addTableOfEventRows_Airtable };
