@@ -354,15 +354,15 @@ app.post("/api/addInvited", async (_req, res) => {
   console.log("addInvited");
   console.log("req", _req.body);
   const {
-    FirstName,
-    LastName,
-    UserID,
-    TableID,
-    Closeness,
-    Phone,
-    AmountInvited,
-    Notes,
-    DoSendMessage,
+    FirstName = "",
+    LastName = "",
+    UserID = 0,
+    TableID = 0,
+    Closeness = "",
+    Phone = 0,
+    AmountInvited = 0,
+    Notes = "",
+    DoSendMessage = "",
   } = _req.body;
   console.log(
     FirstName,
