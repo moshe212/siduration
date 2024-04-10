@@ -353,17 +353,16 @@ app.post("/api/updateTotalInvitedInEventsTable", async (_req, res) => {
 app.post("/api/addInvited", async (_req, res) => {
   console.log("addInvited");
   console.log("req", _req.body);
-  const {
-    FirstName = "",
-    LastName = "",
-    UserID = 0,
-    TableID = 0,
-    Closeness = "",
-    Phone = 0,
-    AmountInvited = 0,
-    Notes = "",
-    DoSendMessage = "",
-  } = _req.body;
+  const FirstName = _req.body.FirstName || "";
+  const LastName = _req.body.FirstName || "";
+  const UserID = _req.body.FirstName || 0;
+  const TableID = _req.body.FirstName || 0;
+  const Closeness = _req.body.FirstName || "";
+  const Phone = _req.body.FirstName || 0;
+  const AmountInvited = _req.body.FirstName || 0;
+  const Notes = _req.body.FirstName || "";
+  const DoSendMessage = _req.body.FirstName || "";
+
   console.log(
     FirstName,
     LastName,
