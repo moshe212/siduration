@@ -15,7 +15,7 @@ const addTableCaple = async ({ TableID, UserID, AmountSeats }) => {
   const getEventIdForUser = async (userId) => {
     console.log("getEventIdForUser");
     console.log("userId: " + userId);
-    const eventsTable = airtableBase("Events");
+    const eventsTable = base("Events");
     const records = await eventsTable
       .select({
         filterByFormula: `{UserID} = '${userId}'`,
@@ -46,7 +46,7 @@ const addTableCaple = async ({ TableID, UserID, AmountSeats }) => {
 
     return { data: record };
   } catch (error) {
-    console.error("Error in addSeatToTableOfEvent operation:", error);
+    console.error("Error in addTableCaple operation:", error);
     return { error };
   }
 };
