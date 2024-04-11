@@ -12,7 +12,9 @@ const addInvited = async ({
   Notes,
   DoSendMessage,
 }) => {
+  const formattedPhone = parseInt(`0${Phone}`);
   console.log({ UserID });
+  console.log({ formattedPhone });
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
   const airtableBase = new Airtable({ apiKey: airtableApiKey }).base(
@@ -45,7 +47,7 @@ const addInvited = async ({
       EventID: eventIDForInsert, // This comes from the previous function, no need to adjust
       TableID, // Assuming direct match, adjust if your Excel column name is different
       Closeness, // Assuming direct match, adjust if needed
-      Phone, // Assuming direct match, adjust if needed
+      Phone: formattedPhone, // Assuming direct match, adjust if needed
       Is_Arriving: "false",
       Amount_Invited: parseInt(AmountInvited), // Example conversion, adjust 'AmountInvited' as needed
       Is_Actually_Arrived: "false",
