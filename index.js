@@ -362,8 +362,10 @@ app.post("/api/addInvited", async (_req, res) => {
   const AmountInvited = _req.body.AmountInvited || 0;
   const Notes = _req.body.Notes || "";
   const DoSendMessage = _req.body.DoSendMessage || "";
+  const InvitedID = _req.body.InvitedID || 0;
 
   console.log(
+    InvitedID,
     FirstName,
     LastName,
     UserID,
@@ -375,23 +377,30 @@ app.post("/api/addInvited", async (_req, res) => {
     DoSendMessage
   );
   res.status(200).send("ok");
-  // dbFunc
-  //   .updateTotalInvitedInEventsTable({
-  //     eventID,
-  //   })
-  //   .then((data) => {
-  //     // Assuming `data` is what the promise resolves with
-  //     console.log(`updateTotalInvitedInEventsTable: ${data}`);
-  //     // Successfully added row, send back a success response
-  //     res.status(200).send("ok");
-  //   })
-  //   .catch((error) => {
-  //     // Properly catch and handle any errors
-  //     console.error(error); // Log the error for debugging
-  //     res
-  //       .status(500)
-  //       .send("error on updateTotalInvitedInEventsTable: " + error);
-  //   });
+  dbFunc
+    .addInvited({
+      InvitedID,
+      FirstName,
+      LastName,
+      UserID,
+      TableID,
+      Closeness,
+      Phone,
+      AmountInvited,
+      Notes,
+      DoSendMessage,
+    })
+    .then((data) => {
+      // Assuming `data` is what the promise resolves with
+      console.log(`addInvited: ${data}`);
+      // Successfully added row, send back a success response
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      // Properly catch and handle any errors
+      console.error(error); // Log the error for debugging
+      res.status(500).send("error on addInvited: " + error);
+    });
 });
 
 app.get("/", (req, res) => {

@@ -5,6 +5,7 @@ const { updateAmountSeats } = require("./updateAmountSeats");
 const { deleteTable } = require("./deleteTable");
 const { addTableToInvited } = require("./addTableToInvited");
 const { updateEventMessageAndTime } = require("./updateEventMessageAndTime");
+const { addInvited } = require("./addInvited");
 const {
   updateTotalInvitedInEventsTable,
 } = require("./updateTotalInvitedInEventsTable");
@@ -23,6 +24,7 @@ const dbFunc = {
   addTableToInvited,
   updateEventMessageAndTime,
   updateTotalInvitedInEventsTable,
+  addInvited,
 };
 
 module.exports = { dbFunc };
