@@ -418,6 +418,46 @@ app.post("/api/addInvited", async (_req, res) => {
       });
 });
 
+app.post("/api/addTableCaple", async (_req, res) => {
+  console.log("addTableCaple");
+  console.log("req", _req.body);
+  const { TableID = 0, UserID = 0, AmountSeats = 0 } = _req.body;
+
+  if (
+    TableID === "undefined" ||
+    UserID === "undefined" ||
+    AmountSeats === "undefined"
+  ) {
+    return res
+      .status(400)
+      .send("All fields are required and must not be empty.");
+  }
+
+  console.log(TableID, UserID, AmountSeats);
+
+  dbFunc
+    .addTableCaple({
+      TableID,
+      UserID,
+      AmountSeats,
+    })
+    .then((data) => {
+      // Assuming `data` is what the promise resolves with
+      console.log(`addTableCaple: ${data}`);
+      // Successfully added row, send back a success response
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      // Properly catch and handle any errors
+      console.error(error); // Log the error for debugging
+      res
+        .status(500)
+        .send(
+          "error on create addTableCaple row in TableOfEvent table" + error
+        );
+    });
+});
+
 app.get("/", (req, res) => {
   res.redirect("/he");
 });

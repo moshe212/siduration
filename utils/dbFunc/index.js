@@ -6,6 +6,7 @@ const { deleteTable } = require("./deleteTable");
 const { addTableToInvited } = require("./addTableToInvited");
 const { updateEventMessageAndTime } = require("./updateEventMessageAndTime");
 const { addInvited } = require("./addInvited");
+const { addTableCaple } = require("./addTableCaple");
 const {
   updateTotalInvitedInEventsTable,
 } = require("./updateTotalInvitedInEventsTable");
@@ -25,6 +26,7 @@ const dbFunc = {
   updateEventMessageAndTime,
   updateTotalInvitedInEventsTable,
   addInvited,
+  addTableCaple,
 };
 
 module.exports = { dbFunc };
