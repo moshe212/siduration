@@ -12,7 +12,7 @@ const addInvited = async ({
   Notes,
   DoSendMessage,
 }) => {
-  const formattedPhone = parseInt(`0${Phone}`);
+  const formattedPhone = `0${Phone}`;
   console.log({ UserID });
   console.log({ formattedPhone });
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
