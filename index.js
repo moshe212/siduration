@@ -371,7 +371,8 @@ app.post("/api/addInvited", async (_req, res) => {
     UserID === undefined ||
     TableID === undefined ||
     Phone === undefined ||
-    AmountInvited === undefined
+    AmountInvited === undefined ||
+    !DoSendMessage
   ) {
     return res
       .status(400)
