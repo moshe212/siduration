@@ -353,6 +353,20 @@ app.post("/api/updateTotalInvitedInEventsTable", async (_req, res) => {
 app.post("/api/addInvited", async (_req, res) => {
   console.log("addInvited");
   console.log("req", _req.body);
+
+  if (
+    !FirstName ||
+    !LastName ||
+    UserID === undefined ||
+    TableID === undefined ||
+    Phone === undefined ||
+    AmountInvited === undefined
+  ) {
+    return res
+      .status(400)
+      .send("All fields are required and must not be empty.");
+  }
+
   const FirstName = _req.body.FirstName || "";
   const LastName = _req.body.LastName || "";
   const UserID = _req.body.UserID || 0;
@@ -376,31 +390,31 @@ app.post("/api/addInvited", async (_req, res) => {
     Notes,
     DoSendMessage
   );
-
-  dbFunc
-    .addInvited({
-      InvitedID,
-      FirstName,
-      LastName,
-      UserID,
-      TableID,
-      Closeness,
-      Phone,
-      AmountInvited,
-      Notes,
-      DoSendMessage,
-    })
-    .then((data) => {
-      // Assuming `data` is what the promise resolves with
-      console.log(`addInvited: ${data}`);
-      // Successfully added row, send back a success response
-      res.status(200).send("ok");
-    })
-    .catch((error) => {
-      // Properly catch and handle any errors
-      console.error(error); // Log the error for debugging
-      res.status(500).send("error on addInvited: " + error);
-    });
+  if (FirstName)
+    dbFunc
+      .addInvited({
+        InvitedID,
+        FirstName,
+        LastName,
+        UserID,
+        TableID,
+        Closeness,
+        Phone,
+        AmountInvited,
+        Notes,
+        DoSendMessage,
+      })
+      .then((data) => {
+        // Assuming `data` is what the promise resolves with
+        console.log(`addInvited: ${data}`);
+        // Successfully added row, send back a success response
+        res.status(200).send("ok");
+      })
+      .catch((error) => {
+        // Properly catch and handle any errors
+        console.error(error); // Log the error for debugging
+        res.status(500).send("error on addInvited: " + error);
+      });
 });
 
 app.get("/", (req, res) => {
