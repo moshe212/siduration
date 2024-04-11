@@ -376,7 +376,7 @@ app.post("/api/addInvited", async (_req, res) => {
     Notes,
     DoSendMessage
   );
-  res.status(200).send("ok");
+
   dbFunc
     .addInvited({
       InvitedID,
