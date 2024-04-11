@@ -35,7 +35,7 @@ const addInvited = async ({
 
   try {
     const eventIDForInsert = await getEventIdForUser(UserID);
-    console.log({ userIDForInsert });
+    console.log({ eventIDForInsert });
     const invitedTable = airtableBase("Invited");
     const airtableRowData = {
       InvitedID,
