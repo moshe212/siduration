@@ -354,6 +354,17 @@ app.post("/api/addInvited", async (_req, res) => {
   console.log("addInvited");
   console.log("req", _req.body);
 
+  const FirstName = _req.body.FirstName || "";
+  const LastName = _req.body.LastName || "";
+  const UserID = _req.body.UserID || 0;
+  const TableID = _req.body.TableID || 0;
+  const Closeness = _req.body.Closeness || "";
+  const Phone = _req.body.Phone || 0;
+  const AmountInvited = _req.body.AmountInvited || 0;
+  const Notes = _req.body.Notes || "";
+  const DoSendMessage = _req.body.DoSendMessage || "";
+  const InvitedID = _req.body.InvitedID || 0;
+
   if (
     !FirstName ||
     !LastName ||
@@ -366,17 +377,6 @@ app.post("/api/addInvited", async (_req, res) => {
       .status(400)
       .send("All fields are required and must not be empty.");
   }
-
-  const FirstName = _req.body.FirstName || "";
-  const LastName = _req.body.LastName || "";
-  const UserID = _req.body.UserID || 0;
-  const TableID = _req.body.TableID || 0;
-  const Closeness = _req.body.Closeness || "";
-  const Phone = _req.body.Phone || 0;
-  const AmountInvited = _req.body.AmountInvited || 0;
-  const Notes = _req.body.Notes || "";
-  const DoSendMessage = _req.body.DoSendMessage || "";
-  const InvitedID = _req.body.InvitedID || 0;
 
   console.log(
     InvitedID,
