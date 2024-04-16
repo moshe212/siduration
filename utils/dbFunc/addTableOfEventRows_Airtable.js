@@ -64,9 +64,9 @@ const addTableOfEventRows_Airtable = async ({
       // Create an array of objects to insert
       let rowsToInsert = Array.from({ length: TableCount }, (_, index) => ({
         fields: {
-          EventID: FinalEventID,
+          EventID: parseInt(FinalEventID),
           TableID: index + 1,
-          UserID: FinalUserID,
+          UserID: parseInt(FinalUserID),
         },
       }));
 
