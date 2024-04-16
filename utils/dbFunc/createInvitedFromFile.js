@@ -9,6 +9,7 @@ const createInvitedFromFile = async ({
   eventIdFromAdalo,
 }) => {
   console.log({ userId });
+  console.log({ eventIdFromAdalo });
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
   const airtableBase = new Airtable({ apiKey: airtableApiKey }).base(
@@ -98,9 +99,10 @@ const createInvitedFromFile = async ({
   const addUserInvitesFromExcel = async (userId, excelFileUrl) => {
     console.log("addUserInvitesFromExcel");
     try {
-      const eventId = eventIdFromAdalo
-        ? eventIdFromAdalo
-        : await getEventIdForUser(userId);
+      const eventId =
+        eventIdFromAdalo !== 0
+          ? eventIdFromAdalo
+          : await getEventIdForUser(userId);
       if (!eventId) {
         console.error("EventID not found for the given UserID");
         return;
