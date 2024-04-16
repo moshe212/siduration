@@ -458,6 +458,25 @@ app.post("/api/addTableCaple", async (_req, res) => {
     });
 });
 
+app.get("/api/getReportsData", async (_req, res) => {
+  console.log("req", _req.body);
+  const UserID = _req.body.UserID || 0; // Default to 0 if undefined
+
+  dbFunc
+    .getEventDetailsByUserId({ userId: UserID })
+    .then((data) => {
+      // Assuming `data` is what the promise resolves with
+      console.log(`getEventDetailsByUserId: ${data}`);
+      // Successfully added row, send back a success response
+      res.status(200).send({ reportData: data });
+    })
+    .catch((error) => {
+      // Properly catch and handle any errors
+      console.error(error); // Log the error for debugging
+      res.status(500).send("error on getEventDetailsByUserId: " + error);
+    });
+});
+
 app.get("/", (req, res) => {
   res.redirect("/he");
 });
