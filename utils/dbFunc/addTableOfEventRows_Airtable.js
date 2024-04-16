@@ -108,7 +108,7 @@ const getEventIdForUser = async (userId) => {
 const getUserID = async (EventID) => {
   console.log("getUserID");
   console.log("eventId: " + EventID);
-  const eventsTable = airtableBase("Events");
+  const eventsTable = base("Events");
   const records = await eventsTable
     .select({
       filterByFormula: `{EventID} = '${EventID}'`,
