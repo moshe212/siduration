@@ -96,6 +96,36 @@ const createInvitedFromFile = async ({
     }
   };
 
+  const updateIsFileUploaded = async (eventId) => {
+    const eventsTable = airtableBase("Events");
+    // Find the correct record ID in the Events table associated with EventID
+    const eventRecords = await eventsTable
+      .select({
+        filterByFormula: `{EventID} = '${eventId}'`,
+      })
+      .firstPage();
+
+    if (eventRecords.length > 0) {
+      const eventRecordId = eventRecords[0].id; // Assuming there's only one match
+
+      // Update the IsTableAdded field for the found record in Events table
+      await eventsTable.update([
+        {
+          id: eventRecordId,
+          fields: {
+            IsFileUploaded: "true",
+          },
+        },
+      ]);
+
+      console.log(`TotalArrived set for EventID: ${eventId} in Events table.`);
+    } else {
+      console.log(
+        `No matching event found for EventID: ${eventId} in Events table.`
+      );
+    }
+  };
+
   const addUserInvitesFromExcel = async (userId, excelFileUrl) => {
     console.log("addUserInvitesFromExcel");
     try {
@@ -109,6 +139,7 @@ const createInvitedFromFile = async ({
       }
 
       await processExcelFile(excelFileUrl, eventId, userId);
+      await updateIsFileUploaded(eventId);
       console.log("All invites have been processed successfully.");
     } catch (error) {
       console.error("An error occurred:", error);
