@@ -74,7 +74,7 @@ const addInvited = async ({
       Notes, // Assuming direct match, adjust if needed
       MsgLang: 1,
       DoSendMessage,
-      UserID: userIDForInsert, // This comes from the parameter, no need to adjust
+      UserID: parseInt(userIDForInsert), // This comes from the parameter, no need to adjust
     };
 
     // Filter out undefined values since Airtable API doesn't accept them
