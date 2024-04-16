@@ -413,7 +413,7 @@ app.post("/api/addInvited", async (_req, res) => {
         // Assuming `data` is what the promise resolves with
         console.log(`addInvited: ${data}`);
         // Successfully added row, send back a success response
-        res.status(200).send("ok");
+        res.status(200).send({ isAdded: true });
       })
       .catch((error) => {
         // Properly catch and handle any errors
