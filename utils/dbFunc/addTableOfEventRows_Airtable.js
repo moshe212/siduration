@@ -17,7 +17,9 @@ const addTableOfEventRows_Airtable = async ({
   const eventsTable = base("Events");
 
   try {
-    const FinalEventID = EventID !== 0 ? EventID : getEventIdForUser(UserID);
+    const FinalEventID =
+      EventID !== 0 ? EventID : await getEventIdForUser(UserID);
+    const FinalUserID = UserID !== 0 ? UserID : await getUserID(FinalEventID);
     // Check if there are any existing rows for the given EventID in TableOfEvent
     let existingRowCount = 0;
     await tableOfEvent
@@ -36,7 +38,7 @@ const addTableOfEventRows_Airtable = async ({
         fields: {
           EventID: FinalEventID,
           TableID: index + 1,
-          UserID: FinalEventID,
+          UserID: FinalUserID,
         },
       }));
 
@@ -101,6 +103,20 @@ const getEventIdForUser = async (userId) => {
 
   // Assuming the first matching record has the EventID you need
   return records.length > 0 ? records[0].fields.EventID : null;
+};
+
+const getUserID = async (EventID) => {
+  console.log("getUserID");
+  console.log("eventId: " + EventID);
+  const eventsTable = airtableBase("Events");
+  const records = await eventsTable
+    .select({
+      filterByFormula: `{EventID} = '${EventID}'`,
+    })
+    .firstPage();
+
+  // Assuming the first matching record has the EventID you need
+  return records.length > 0 ? records[0].fields.UserID : null;
 };
 
 module.exports = { addTableOfEventRows_Airtable };
