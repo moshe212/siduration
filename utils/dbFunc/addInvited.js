@@ -11,6 +11,7 @@ const addInvited = async ({
   AmountInvited,
   Notes,
   DoSendMessage,
+  EventID,
 }) => {
   const formattedPhone = `0${Phone}`;
   console.log({ UserID });
@@ -35,9 +36,27 @@ const addInvited = async ({
     return records.length > 0 ? records[0].fields.EventID : null;
   };
 
+  const getUserID = async (eventId) => {
+    console.log("getUserID");
+    console.log("eventId: " + eventId);
+    const eventsTable = airtableBase("Events");
+    const records = await eventsTable
+      .select({
+        filterByFormula: `{EventID} = '${eventId}'`,
+      })
+      .firstPage();
+
+    // Assuming the first matching record has the EventID you need
+    return records.length > 0 ? records[0].fields.UserID : null;
+  };
+
   try {
-    const eventIDForInsert = await getEventIdForUser(UserID);
+    const eventIDForInsert =
+      EventID !== 0 ? EventID : await getEventIdForUser(UserID);
+    const userIDForInsert =
+      UserID !== 0 ? UserID : await getUserID(eventIDForInsert);
     console.log({ eventIDForInsert });
+    console.log({ userIDForInsert });
     const invitedTable = airtableBase("Invited");
     const airtableRowData = {
       InvitedID,
@@ -55,7 +74,7 @@ const addInvited = async ({
       Notes, // Assuming direct match, adjust if needed
       MsgLang: 1,
       DoSendMessage,
-      UserID, // This comes from the parameter, no need to adjust
+      UserID: userIDForInsert, // This comes from the parameter, no need to adjust
     };
 
     // Filter out undefined values since Airtable API doesn't accept them

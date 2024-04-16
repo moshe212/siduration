@@ -364,6 +364,7 @@ app.post("/api/addInvited", async (_req, res) => {
   const Notes = _req.body.Notes || "";
   const DoSendMessage = _req.body.DoSendMessage || "";
   const InvitedID = _req.body.InvitedID || 0;
+  const EventID = _req.body.EventID || 0;
 
   if (
     !FirstName ||
@@ -372,6 +373,7 @@ app.post("/api/addInvited", async (_req, res) => {
     TableID === "undefined" ||
     Phone === "undefined" ||
     AmountInvited === "undefined" ||
+    EventID === "undefined" ||
     !DoSendMessage
   ) {
     return res
@@ -389,7 +391,8 @@ app.post("/api/addInvited", async (_req, res) => {
     Phone,
     AmountInvited,
     Notes,
-    DoSendMessage
+    DoSendMessage,
+    EventID
   );
   if (FirstName)
     dbFunc
@@ -404,6 +407,7 @@ app.post("/api/addInvited", async (_req, res) => {
         AmountInvited,
         Notes,
         DoSendMessage,
+        EventID,
       })
       .then((data) => {
         // Assuming `data` is what the promise resolves with
