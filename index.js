@@ -473,7 +473,9 @@ app.get("/api/getReportsData", async (_req, res) => {
     .catch((error) => {
       // Properly catch and handle any errors
       console.error(error); // Log the error for debugging
-      res.status(500).send("error on getEventDetailsByUserId: " + error);
+      res
+        .status(500)
+        .send({ error: "error on getEventDetailsByUserId: " + error });
     });
 });
 
