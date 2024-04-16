@@ -70,7 +70,7 @@ app.post("/api/createTableOfEventRows", async (_req, res) => {
       // Assuming `data` is what the promise resolves with
       console.log(`addTableOfEventRows: ${data}`);
       // Successfully added row, send back a success response
-      res.status(200).send("ok");
+      res.status(200).send({ isCreated: "ok" });
     })
     .catch((error) => {
       // Properly catch and handle any errors
