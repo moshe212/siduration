@@ -483,6 +483,10 @@ app.get("/api/getReportsData", async (_req, res) => {
     });
 });
 
+app.get("/privacy-policy", (req, res) => {
+  res.redirect("/privacy-policy.html");
+});
+
 app.get("/", (req, res) => {
   res.redirect("/he");
 });
