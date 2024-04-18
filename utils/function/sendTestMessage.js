@@ -5,7 +5,7 @@ const { extractDateAndHour } = require("./extractDateAndHour");
 const sendTestMessage = async ({ eventID, msgText, langID }) => {
   const airtableApiKey = process.env.AIRTABLE_API_KEY;
   const airtableBaseId = process.env.AIRTABLE_BASE_ID;
-  const phoneNumber = "9725477494990@c.us"; // Target phone number
+  const phoneNumber = "972547749499@c.us"; // Target phone number
   const airtableHeaders = {
     Authorization: `Bearer ${airtableApiKey}`,
     "Content-Type": "application/json",
