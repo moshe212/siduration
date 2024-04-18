@@ -483,7 +483,7 @@ app.get("/api/getReportsData", async (_req, res) => {
     });
 });
 
-app.use("/privacy-policy", express.static("./public/"));
+app.use("/privacy-policy", express.static("./public/privacy-policy"));
 // app.get("/privacy-policy", (req, res) => {
 //   res.redirect("/public/privacy-policy.html");
 // });
